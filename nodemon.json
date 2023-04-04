@@ -1,4 +1,7 @@
 {
-  "ignore": ["webpack.config.js", "src/client/*", "assets/*"],
-  "exec": "babel-node src/init.js"
+    "ignore": ["webpack.config.js", "src/client/*", "assets/*"],
+    "exec": "babel-node src/init.js",
+    "events": {
+        "restart": "npm run dev:assets"
+    }
 }
