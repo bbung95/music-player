@@ -19,16 +19,20 @@ let listData = [];
 const playSong = (title, artist) => {
     const findData = listData.find(({ track }) => title === track.name && artist === track.artist.name);
 
-    console.log(findData);
-
-    // location.href=`/song/${findData.}`
+    location.href = `/song/${findData.track.artist.name}/${findData.track.name}?thumbnail=${
+        findData.track.album?.image[2]["#text"] || "https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png"
+    }`;
 };
 
 const setSearchItem = ({ data }) => {
     $searchListBox.innerHTML = "";
 
+    console.log(data);
+
     if (data.length > 0) {
         data.forEach(({ track }) => {
+            if (!track) return;
+
             const el = document.createElement("li");
             el.className = "search-item";
             el.onclick = () => playSong(track.name, track.artist.name);

@@ -1,0 +1,52 @@
+.container {
+    width: $container-width;
+    margin: 0 auto;
+    background: #6d6262;
+    height: 100vh;
+}
+
+.top-container {
+    padding: 30px 40px 0 40px;
+
+    & > .title {
+        font-size: 40px;
+        font-weight: bold;
+    }
+
+    & .top-list {
+        list-style: none;
+        margin-top: 30px;
+        background-color: #f4f4f4;
+
+        & .top-item {
+            cursor: pointer;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            height: 130px;
+            gap: 10px;
+            color: black;
+            border-bottom: 1px solid lightgray;
+
+            & img {
+                width: 120px;
+                height: 120px;
+            }
+
+            & .item-info {
+                & .title {
+                    font-size: 26px;
+                }
+
+                & .artist {
+                    font-size: 20px;
+                }
+            }
+
+            &:hover {
+                background-color: #e1dfdf;
+            }
+        }
+    }
+}

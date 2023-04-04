@@ -1,23 +1,33 @@
 import async from "regenerator-runtime";
 import Song from "../models/Song";
 import User from "../models/User";
-import request from "request";
+import axios from "axios";
+
+const API_END_POINT = "https://ws.audioscrobbler.com/2.0/";
 
 export const home = async (req, res) => {
-    return res.render("home", { pageTitle: "Home" });
+    const list = await Song.find({}).sort({ playcount: "desc" }).limit(10);
+
+    return res.render("home", { pageTitle: "Home", topList: list });
 };
 
 export const playSong = async (req, res) => {
-    const findSong = await Song.findOne({ title: "ditto" });
+    const data = {
+        title: req.params.title,
+        artist: req.params.artist,
+        thumbnail: req.query?.thumbnail,
+    };
+
+    const findSong = await Song.findOne({ title: data.title });
 
     // 등록
     if (!findSong) {
-        const song = new Song(req.body);
+        const song = new Song(data);
         await song.save();
         await res.render("song", { pageTitle: "Song", data: song });
     } else {
         // 카운트 업
-        await Song.findOneAndUpdate({ title: "ditto", update: req.body });
+        await Song.update({ title: data.title }, { playcount: findSong.playcount + 1 });
         await res.render("song", { pageTitle: "Song", data: findSong });
     }
 };
@@ -25,31 +35,34 @@ export const playSong = async (req, res) => {
 export const searchSongList = async (req, res) => {
     const searchKeyword = req.query.keyword;
 
-    request.get(`https://ws.audioscrobbler.com/2.0/?method=track.search&track=${searchKeyword}&api_key=${process.env.LAST_FM_KEY}&format=json`, async (error, response, body) => {
-        if (error) {
-            console.log(error);
-        }
-
-        let list = JSON.parse(body).results?.trackmatches?.track || [];
-        let newTracks = [];
-        for (let data of list) {
-            newTracks.push(
-                JSON.parse(await doRequest(`http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=${process.env.LAST_FM_KEY}&artist=${data.artist}&track=${data.name}&format=json`))
-            );
-        }
-
-        return res.json(newTracks);
+    const resp = await axios.get(API_END_POINT, {
+        params: {
+            method: "track.search",
+            track: encodeURIComponent(searchKeyword),
+            api_key: process.env.LAST_FM_KEY,
+            limit: 10,
+            format: "json",
+        },
     });
+    const list = resp.data.results?.trackmatches?.track || [];
+
+    let newTracks = [];
+    for (let data of list) {
+        newTracks.push(await fomatSong(data));
+    }
+
+    return res.json(newTracks);
 };
 
-function doRequest(url) {
-    return new Promise(function (resolve, reject) {
-        request(url, function (error, res, body) {
-            if (!error && res.statusCode === 200) {
-                resolve(body);
-            } else {
-                reject(error);
-            }
-        });
+const fomatSong = async (data) => {
+    const resp = await axios.get(API_END_POINT, {
+        params: {
+            method: "track.getInfo",
+            track: data.name,
+            artist: data.artist,
+            api_key: process.env.LAST_FM_KEY,
+            format: "json",
+        },
     });
-}
+    return resp.data;
+};

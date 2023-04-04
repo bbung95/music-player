@@ -5,6 +5,6 @@ const rootRouter = express.Router();
 
 rootRouter.get("/", home);
 rootRouter.get("/api/songs", searchSongList);
-rootRouter.get("/song", playSong);
+rootRouter.get("/song/:artist/:title", playSong);
 
 export default rootRouter;

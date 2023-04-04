@@ -6,7 +6,7 @@
         display: flex;
         align-items: center;
         margin: 0 auto;
-        width: 358px;
+        width: $container-width;
 
         & .search-container {
             position: relative;
