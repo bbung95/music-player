@@ -6,9 +6,14 @@ import axios from "axios";
 const API_END_POINT = "https://ws.audioscrobbler.com/2.0/";
 
 export const home = async (req, res) => {
-    const list = await Song.find({}).sort({ playcount: "desc" }).limit(10);
+    // const list = await Song.find({}).sort({ playcount: "desc" }).limit(10);
 
-    return res.render("home", { pageTitle: "Home", topList: list });
+    // return res.render("home", { pageTitle: "Home", topList: list });
+    return res.render("home", { pageTitle: "Home" });
+};
+
+export const song = async (req, res) => {
+    return res.render("song", { pageTitle: "Song" });
 };
 
 export const playSong = async (req, res) => {

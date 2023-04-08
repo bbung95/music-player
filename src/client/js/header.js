@@ -1,5 +1,4 @@
 import { async } from "regenerator-runtime";
-
 const get = (target) => document.querySelector(target);
 
 const $searchInput = get("input[name=track]");
@@ -26,8 +25,6 @@ const playSong = (title, artist) => {
 
 const setSearchItem = ({ data }) => {
     $searchListBox.innerHTML = "";
-
-    console.log(data);
 
     if (data.length > 0) {
         data.forEach(({ track }) => {

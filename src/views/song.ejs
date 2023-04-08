@@ -1,12 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Music-Player</title>
-    </head>
+    <%-include("partials/head.ejs")%>
+
     <body>
-        Song
+        <div class="background"></div>
+        <main class="main">
+            <div class="container">
+                <div class="player-container">
+                    <div class="player-box">
+                        <img class="album-image" src="https://image.bugsm.co.kr/album/images/500/40824/4082425.jpg" />
+                        <div id="ytplayer"></div>
+                        <div class="player-controller">
+                            <button type="button" class="play-btn">play</button>
+                            <button type="button" class="pause-btn">pause</button>
+                            <progress value="100" class="volume-bar"></progress>
+                            <input type="hidden" value="0" name="volume" />
+                            <button type="button" class="mute-btn">mute</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <script src="/static/js/main.js"></script>
+        <script>
+            var tag = document.createElement("script");
+
+            tag.src = "https://www.youtube.com/iframe_api";
+            var firstScriptTag = document.getElementsByTagName("script")[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+            let player;
+            function onYouTubePlayerAPIReady() {
+                player = new YT.Player("ytplayer", {
+                    height: "300",
+                    width: "300",
+                    videoId: "Km71Rr9K-Bw",
+                    events: {
+                        onReady: onPlayerReady,
+                    },
+                });
+            }
+
+            const onPlayerReady = (event) => {
+                event.target.unMute();
+                // event.target.playVideo();
+            };
+
+            const onPlayerPlay = () => {
+                player.playVideo();
+            };
+
+            const onPlayerPasue = () => {
+                player.pauseVideo();
+            };
+
+            const onPlayerMute = () => {
+                if (player.isMuted()) {
+                    player.unMute();
+                } else {
+                    player.mute();
+                }
+            };
+
+            document.querySelector(".play-btn").onclick = onPlayerPlay;
+            document.querySelector(".pause-btn").onclick = onPlayerPasue;
+            document.querySelector(".mute-btn").onclick = onPlayerMute;
+        </script>
     </body>
 </html>

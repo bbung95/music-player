@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%-include("partials/head.ejs")%>
+    <body>
+        <%-include("partials/header.ejs")%>
+
+        <div class="container">
+            <section class="top-container">
+                <h1 class="title">Top10</h1>
+                <ul class="top-list">
+                    <% for(var i = 0; i < topList.length; i++){ %>
+                    <li class="top-item" onclick="location.href='/song/<%= topList[i].artist %>/<%= topList[i].title %>'">
+                        <img src="<%= topList[i].thumbnail %>" />
+                        <div class="item-info">
+                            <div class="title"><%= topList[i].title %></div>
+                            <div class="artist"><%= topList[i].artist %> playcount : <%= topList[i].playcount %></div>
+                        </div>
+                    </li>
+                    <% } %>
+                </ul>
+            </section>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="/static/js/main.js"></script>
+    </body>
+</html>

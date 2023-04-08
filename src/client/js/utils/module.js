@@ -1,1 +1,1 @@
-const get = (target) => document.querySelector(target);
+export const get = (target) => document.querySelector(target);

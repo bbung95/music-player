@@ -5,10 +5,12 @@ import flash from "express-flash";
 import MongoStore from "connect-mongo";
 import { localsMiddleware } from "./middlewares";
 import rootRouter from "./routers/rootRouter";
+// import { getCookieParser } from "next/dist/server/api-utils";
 
 const app = express();
 const logger = morgan("dev");
 
+// app.use(getCookieParser(process.env.COOKIE_SECRET, { sameSite: "none", secure: true }));
 app.set("view engine", "ejs");
 app.set("views", process.cwd() + "/src/views");
 app.use(logger);
