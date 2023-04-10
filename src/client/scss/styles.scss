@@ -6,6 +6,7 @@
 @import "./components/header.scss";
 @import "./components/home.scss";
 @import "./components/song.scss";
+@import "./components/footer.scss";
 
 // Screens
 // Example: @import "./screens/search.scss";
@@ -22,6 +23,7 @@ body {
 
 .background {
     height: 100vh;
+    width: 100%;
     background-image: url("https://image.bugsm.co.kr/album/images/500/40824/4082425.jpg");
     background-repeat: no-repeat;
     background-size: cover;
@@ -36,7 +38,7 @@ body {
     height: 100vh;
 
     & .container {
-        width: 768px;
+        width: 414px;
         margin: 0 auto;
         background: none;
     }

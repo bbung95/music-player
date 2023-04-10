@@ -9,19 +9,22 @@
                 <div class="player-container">
                     <div class="player-box">
                         <div class="album-image-box">
-                            <img class="album-image" src="https://image.bugsm.co.kr/album/images/500/40824/4082425.jpg" />
+                            <div class="image-wrap">
+                                <img class="album-image" src="https://image.bugsm.co.kr/album/images/500/40824/4082425.jpg" />
+                            </div>
                             <div id="ytplayer"></div>
                         </div>
                         <div class="album-info">
                             <p class="track">DITTO</p>
-                            <p class="artist">NewJeanse</p>
+                            <p class="artist">NewJeans</p>
                         </div>
                         <div class="player-controller">
                             <div class="play-bar-group">
-                                <div class="progress play-bar"></div>
-                                <span class="current-time">1:02</span>
-                                <span class="play-time">3:09</span>
-                                <input type="hidden" value="0" name="playtime" />
+                                <div class="progress play-bar">
+                                    <div class="bar"></div>
+                                </div>
+                                <span class="current-time">0:00</span>
+                                <span class="play-time">0:00</span>
                             </div>
                             <div class="button-group">
                                 <button type="button" class="side-btn prev-btn">
@@ -54,25 +57,30 @@
                                 </button>
                             </div>
                             <div class="volume-bar-group">
-                                <span
-                                    ><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-volume-off-fill" viewBox="0 0 16 16">
-                                        <path d="M10.717 3.55A.5.5 0 0 1 11 4v8a.5.5 0 0 1-.812.39L7.825 10.5H5.5A.5.5 0 0 1 5 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06z" /></svg
-                                ></span>
-                                <div class="progress volume-bar"></div>
-                                <span
-                                    ><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-volume-up-fill" viewBox="0 0 16 16">
+                                <span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-volume-off-fill" viewBox="0 0 16 16">
+                                        <path d="M10.717 3.55A.5.5 0 0 1 11 4v8a.5.5 0 0 1-.812.39L7.825 10.5H5.5A.5.5 0 0 1 5 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06z" />
+                                    </svg>
+                                </span>
+                                <div class="progress volume-bar">
+                                    <div class="bar"></div>
+                                </div>
+                                <span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-volume-up-fill" viewBox="0 0 16 16">
                                         <path d="M11.536 14.01A8.473 8.473 0 0 0 14.026 8a8.473 8.473 0 0 0-2.49-6.01l-.708.707A7.476 7.476 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303l.708.707z" />
                                         <path d="M10.121 12.596A6.48 6.48 0 0 0 12.025 8a6.48 6.48 0 0 0-1.904-4.596l-.707.707A5.483 5.483 0 0 1 11.025 8a5.483 5.483 0 0 1-1.61 3.89l.706.706z" />
                                         <path
                                             d="M8.707 11.182A4.486 4.486 0 0 0 10.025 8a4.486 4.486 0 0 0-1.318-3.182L8 5.525A3.489 3.489 0 0 1 9.025 8 3.49 3.49 0 0 1 8 10.475l.707.707zM6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06z"
-                                        /></svg
-                                ></span>
-                                <input type="hidden" value="0" name="volume" />
+                                        />
+                                    </svg>
+                                </span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <%-include("partials/footer.ejs")%>
         </main>
 
         <script src="/static/js/main.js"></script>
@@ -85,6 +93,12 @@
 
             const $playBtn = document.querySelector(".play-btn");
             const $pauseBtn = document.querySelector(".pause-btn");
+            const $imageWrap = document.querySelector(".image-wrap");
+            const $playBar = document.querySelector(".play-bar");
+            const $volumeBar = document.querySelector(".volume-bar");
+
+            const $currentTime = document.querySelector(".current-time");
+            const $playTime = document.querySelector(".play-time");
 
             let player;
             function onYouTubePlayerAPIReady() {
@@ -102,11 +116,41 @@
 
             const onPlayerReady = (event) => {
                 event.target.unMute();
+                const volume = localStorage.getItem("music-volume") ?? 100;
+                player.setVolume(volume);
+                $volumeBar.querySelector(".bar").style.width = volume + "%";
+                $playTime.textContent = formatTime(player.getDuration());
+            };
+
+            const getPrograssBarPercent = (e, target) => {
+                const curX = e.pageX - target.getBoundingClientRect().x;
+                const percent = Math.floor(curX / (target.offsetWidth / 100));
+
+                return percent;
+            };
+
+            const onChangePlayTime = (e) => {
+                const percent = getPrograssBarPercent(e, $playBar);
+                $playBar.querySelector(".bar").style.width = percent + "%";
+                const playTime = (player.getDuration() / 100) * percent;
+                player.seekTo(playTime, true);
+
+                console.log(percent);
+            };
+
+            const onChangeVolume = (e) => {
+                const percent = getPrograssBarPercent(e, $volumeBar);
+                player.setVolume(percent);
+                $volumeBar.querySelector(".bar").style.width = percent + "%";
+                localStorage.setItem("music-volume", percent);
             };
 
             const onStateChange = (event) => {
-                console.log(event.data);
                 switch (event.data) {
+                    case 0:
+                        onPlayerPasue();
+                        $currentTime.textContent = formatTime(player.getDuration());
+                        break;
                     case 1:
                         $pauseBtn.style.display = "block";
                         $playBtn.style.display = "none";
@@ -120,16 +164,55 @@
                 }
             };
 
+            let rotateIntervalID = "";
+            let playTimeIntervalID = "";
+            let rotate = 0;
+
+            const rotateImage = () => {
+                rotateIntervalID = setInterval(() => {
+                    $imageWrap.style.transform = `rotateZ(${rotate++}deg)`;
+                }, 60);
+            };
+
+            const formatTime = (value) => {
+                let minute = 00;
+                let seconds = 0;
+
+                if (value >= 60) {
+                    minute = Math.floor(value / 60);
+                    minute = minute > 9 ? minute : "0" + minute;
+                }
+
+                seconds = Math.floor(value % 60);
+                seconds = seconds > 9 ? seconds : "0" + seconds;
+
+                return minute + ":" + seconds;
+            };
+
+            const setPlayTime = () => {
+                playTimeIntervalID = setInterval(() => {
+                    $currentTime.textContent = formatTime(player.getCurrentTime());
+                    const percent = player.getCurrentTime() / (player.getDuration() / 100);
+                    $playBar.querySelector(".bar").style.width = percent + "%";
+                }, 1000);
+            };
+
             const onPlayerPlay = () => {
                 player.playVideo();
+                rotateImage();
+                setPlayTime();
             };
 
             const onPlayerPasue = () => {
                 player.pauseVideo();
+                clearInterval(rotateIntervalID);
+                clearInterval(playTimeIntervalID);
             };
 
             $playBtn.onclick = onPlayerPlay;
             $pauseBtn.onclick = onPlayerPasue;
+            $playBar.onclick = onChangePlayTime;
+            $volumeBar.onclick = onChangeVolume;
         </script>
     </body>
 </html>

@@ -1,5 +1,6 @@
 import "../scss/styles.scss";
-import "./header";
+// import "./header";
+// import "./footer";
 
 // 페이지 새로고침
 window.onpageshow = function (event) {
