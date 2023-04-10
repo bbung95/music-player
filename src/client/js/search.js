@@ -1,17 +1,9 @@
 import { async } from "regenerator-runtime";
 const get = (target) => document.querySelector(target);
 
-const $searchInput = get("input[name=track]");
-const $searchBtn = get("#search-btn");
+const $searchInput = get("input[name=search-keyword]");
+const $searchBtn = get(".search-btn");
 const $searchListBox = get(".search-list-box");
-
-const showSearchBox = () => {
-    $searchListBox.classList.remove("hidden");
-};
-
-const hideSearchBox = () => {
-    $searchListBox.classList.add("hidden");
-};
 
 let listData = [];
 
@@ -26,23 +18,28 @@ const playSong = (title, artist) => {
 const setSearchItem = ({ data }) => {
     $searchListBox.innerHTML = "";
 
-    if (data.length > 0) {
-        data.forEach(({ track }) => {
-            if (!track) return;
+    data.forEach(({ track }) => {
+        if (!track) return;
 
-            const el = document.createElement("li");
-            el.className = "search-item";
-            el.onclick = () => playSong(track.name, track.artist.name);
-            el.innerHTML = `<img src="${track.album?.image[2]["#text"] || "https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png"}" />
-            <span class="title">${track.name}</span>
-            <span class="artist">${track.artist.name}</span>`;
+        const el = document.createElement("li");
+        el.className = "search-item";
+        el.onclick = () => playSong(track.name, track.artist.name);
+        el.innerHTML = `<img src="${track.album?.image[2]["#text"] || "https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png"}" />
+            <div class="item-info">
+                <div class="title">${track.name}</div>
+                <div class="artist">${track.artist.name}</div>
+            </div>`;
 
-            $searchListBox.append(el);
-        });
+        $searchListBox.append(el);
+    });
 
-        showSearchBox();
-    } else {
-        hideSearchBox();
+    if (data.length === 0) {
+        const el = document.createElement("div");
+        el.className = "empty-item";
+        el.innerHTML = `<div>결과 없음</div>
+                        <p>새로운 검색을 시도하십시오.</p>`;
+
+        $searchListBox.append(el);
     }
 };
 

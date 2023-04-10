@@ -2,9 +2,27 @@
 <html lang="en">
     <%-include("partials/head.ejs")%>
     <body>
-        <!-- <%-include("partials/header.ejs")%> -->
-        <div class="background"></div>
-        <main class="main"></main>
+        <main class="main">
+            <div class="container">
+                <section class="trending-container">
+                    <div class="title">trending right now</div>
+                    <ul class="trending-list-box">
+                        <% for(var i = 0; i < trendingList.length; i++){ %>
+                        <li class="trending-item" onclick="location.href='/song/<%= trendingList[i].artist %>/<%= trendingList[i].title %>'">
+                            <img src="<%= trendingList[i].thumbnail %>" />
+                            <div class="item-info">
+                                <div class="title"><%= trendingList[i].title %></div>
+                                <div class="artist"><%= trendingList[i].artist %></div>
+                            </div>
+                            <span class="play-count"><%= trendingList[i].playcount %></span>
+                        </li>
+                        <% } %>
+                    </ul>
+                </section>
+            </div>
+        </main>
+
+        <%-include("partials/footer.ejs")%>
 
         <script src="/static/js/main.js"></script>
     </body>

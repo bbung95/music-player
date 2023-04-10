@@ -6,6 +6,7 @@ const songSchema = new mongoose.Schema({
     thumbnail: { type: String, required: true },
     listener: { type: Number, default: 1 },
     playcount: { type: Number, default: 1 },
+    videoId: { type: String, required: true },
 });
 
 const Song = mongoose.model("Song", songSchema);

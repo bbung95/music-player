@@ -10,13 +10,13 @@
                     <div class="player-box">
                         <div class="album-image-box">
                             <div class="image-wrap">
-                                <img class="album-image" src="https://image.bugsm.co.kr/album/images/500/40824/4082425.jpg" />
+                                <img class="album-image" src="" />
                             </div>
                             <div id="ytplayer"></div>
                         </div>
                         <div class="album-info">
-                            <p class="track">DITTO</p>
-                            <p class="artist">NewJeans</p>
+                            <p class="track"></p>
+                            <p class="artist"></p>
                         </div>
                         <div class="player-controller">
                             <div class="play-bar-group">
@@ -85,6 +85,8 @@
 
         <script src="/static/js/main.js"></script>
         <script>
+            const id = "<%= id %>";
+
             var tag = document.createElement("script");
 
             tag.src = "https://www.youtube.com/iframe_api";
@@ -100,12 +102,30 @@
             const $currentTime = document.querySelector(".current-time");
             const $playTime = document.querySelector(".play-time");
 
+            const $trackTitle = document.querySelector(".track");
+            const $artist = document.querySelector(".artist");
+            const $thumbnail = document.querySelector(".album-image");
+
+            const fetchGetSong = async () => {
+                const res = await axios.get(`/api/song/${id}`);
+
+                const { title, artist, thumbnail } = res.data.data;
+
+                $trackTitle.textContent = title;
+                $artist.textContent = artist;
+                $thumbnail.src = thumbnail;
+                document.querySelector(".background").style.setProperty("background-image", `url(${thumbnail})`);
+
+                return res.data.data.videoId;
+            };
+            const res = fetchGetSong();
+
             let player;
-            function onYouTubePlayerAPIReady() {
+            async function onYouTubePlayerAPIReady() {
                 player = new YT.Player("ytplayer", {
                     height: "300",
                     width: "300",
-                    videoId: "Km71Rr9K-Bw",
+                    videoId: await res,
                     playerVars: { controls: 0 },
                     events: {
                         onReady: onPlayerReady,
@@ -134,8 +154,6 @@
                 $playBar.querySelector(".bar").style.width = percent + "%";
                 const playTime = (player.getDuration() / 100) * percent;
                 player.seekTo(playTime, true);
-
-                console.log(percent);
             };
 
             const onChangeVolume = (e) => {

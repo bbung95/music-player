@@ -1,5 +1,5 @@
 import "../scss/styles.scss";
-// import "./header";
+import "./search";
 // import "./footer";
 
 // 페이지 새로고침

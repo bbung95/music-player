@@ -1,51 +1,60 @@
-.container {
-    width: $container-width;
+.trending-container {
     margin: 0 auto;
-    background: #6d6262;
-    height: 100vh;
-}
-
-.top-container {
-    padding: 30px 40px 0 40px;
+    padding-top: 40px;
+    width: 90%;
 
     & > .title {
-        font-size: 40px;
-        font-weight: bold;
+        padding: 8px 14px;
+        width: fit-content;
+        font-size: 16px;
+        border-radius: 14px;
+        background-color: rgba(lightgray, 0.7);
     }
 
-    & .top-list {
+    & .trending-list-box {
         list-style: none;
-        margin-top: 30px;
-        background-color: #f4f4f4;
+        margin-top: 20px;
+        height: 432px;
+        background-color: inherit;
 
-        & .top-item {
+        & .trending-item {
             cursor: pointer;
-            box-sizing: border-box;
+            box-sizing: content-box;
             display: flex;
             align-items: center;
-            padding: 10px;
-            height: 130px;
-            gap: 10px;
-            color: black;
-            border-bottom: 1px solid lightgray;
+            padding: 6px 10px;
+            height: 60px;
+            gap: 16px;
+            color: white;
 
             & img {
-                width: 120px;
-                height: 120px;
+                width: 60px;
+                height: 60px;
+                border-radius: 12px;
             }
 
             & .item-info {
+                width: 55%;
                 & .title {
-                    font-size: 26px;
+                    font-size: 20px;
+                    font-weight: bold;
+                    margin-bottom: 6px;
                 }
 
                 & .artist {
-                    font-size: 20px;
+                    font-size: 14px;
+                    color: rgb(237, 237, 237);
                 }
             }
 
+            .play-count {
+                margin-left: auto;
+                padding: 0;
+            }
+
             &:hover {
-                background-color: #e1dfdf;
+                background-color: rgba(lightgray, 0.2);
+                border-radius: 12px;
             }
         }
     }

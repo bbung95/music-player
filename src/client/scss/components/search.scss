@@ -1,0 +1,109 @@
+.search-container {
+    padding-top: 20px;
+    margin: 0 auto;
+    width: 90%;
+
+    & .input-group {
+        position: relative;
+
+        & .input-text {
+            box-sizing: border-box;
+            padding-left: 60px;
+            width: 100%;
+            height: 50px;
+            background-color: rgba(211, 211, 211, 0.2);
+            border: none;
+            border-radius: 20px;
+            color: white;
+            font-size: 16px;
+            outline: none;
+
+            &:focus {
+                padding-left: 58px;
+                border: 2px solid white;
+            }
+
+            &::placeholder {
+                color: lightgray;
+            }
+        }
+
+        & .search-btn {
+            box-sizing: border-box;
+            position: absolute;
+            top: 0;
+            left: 6px;
+            width: 50px;
+            height: 50px;
+            color: white;
+            background: inherit;
+            border: none;
+
+            &:hover {
+                color: lightgray;
+            }
+        }
+    }
+
+    & .search-list-box {
+        position: relative;
+        list-style: none;
+        margin-top: 20px;
+        height: calc(100vh - 200px);
+        background-color: inherit;
+        overflow: auto;
+
+        & .empty-item {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+
+            & div {
+                font-size: 26px;
+                margin-bottom: 12px;
+            }
+
+            & p {
+                font-size: 16px;
+            }
+        }
+
+        & .search-item {
+            cursor: pointer;
+            box-sizing: content-box;
+            display: flex;
+            align-items: center;
+            padding: 6px 10px;
+            height: 60px;
+            gap: 16px;
+            color: white;
+
+            & img {
+                width: 60px;
+                height: 60px;
+                border-radius: 12px;
+            }
+
+            &:hover {
+                background-color: rgba(lightgray, 0.2);
+                border-radius: 12px;
+            }
+
+            & .item-info {
+                width: 55%;
+                & .title {
+                    font-size: 20px;
+                    font-weight: bold;
+                    margin-bottom: 6px;
+                }
+
+                & .artist {
+                    font-size: 14px;
+                    color: rgb(237, 237, 237);
+                }
+            }
+        }
+    }
+}

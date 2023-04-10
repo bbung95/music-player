@@ -5,36 +5,36 @@ import axios from "axios";
 
 const API_END_POINT = "https://ws.audioscrobbler.com/2.0/";
 
-export const home = async (req, res) => {
-    // const list = await Song.find({}).sort({ playcount: "desc" }).limit(10);
-
-    // return res.render("home", { pageTitle: "Home", topList: list });
-    return res.render("home", { pageTitle: "Home" });
-};
-
 export const song = async (req, res) => {
     return res.render("song", { pageTitle: "Song" });
 };
 
 export const playSong = async (req, res) => {
-    const data = {
+    let data = {
         title: req.params.title,
         artist: req.params.artist,
         thumbnail: req.query?.thumbnail,
     };
 
-    const findSong = await Song.findOne({ title: data.title });
-
+    const findSong = await Song.findOne({ title: data.title, artist: data.artist });
     // 등록
     if (!findSong) {
+        const videoId = await getYoutubeId(data.title, data.artist);
+        data = { ...data, videoId: videoId };
         const song = new Song(data);
         await song.save();
-        await res.render("song", { pageTitle: "Song", data: song });
+        await res.render("song", { pageTitle: "Song", id: song.id });
     } else {
         // 카운트 업
-        await Song.update({ title: data.title }, { playcount: findSong.playcount + 1 });
-        await res.render("song", { pageTitle: "Song", data: findSong });
+        await findSong.update({ playcount: findSong.playcount + 1 });
+        await res.render("song", { pageTitle: "Song", id: findSong.id });
     }
+};
+
+export const getSong = async (req, res) => {
+    const id = req.params.id;
+    const findSong = await Song.findById(id);
+    await res.json({ data: findSong });
 };
 
 export const searchSongList = async (req, res) => {
@@ -59,8 +59,16 @@ export const searchSongList = async (req, res) => {
     return res.json(newTracks);
 };
 
+const getYoutubeId = async (album, artist) => {
+    const keyword = album + "+" + artist;
+    const url = `https://www.googleapis.com/youtube/v3/search?part=id&q=${keyword}&type=video&maxResults=1&key=${process.env.YOUTUBE_API_KEY}`;
+    const res = await axios.get(url);
+
+    return res.data.items[0].id.videoId;
+};
+
 const fomatSong = async (data) => {
-    const resp = await axios.get(API_END_POINT, {
+    const res = await axios.get(API_END_POINT, {
         params: {
             method: "track.getInfo",
             track: data.name,
@@ -69,5 +77,5 @@ const fomatSong = async (data) => {
             format: "json",
         },
     });
-    return resp.data;
+    return res.data;
 };
