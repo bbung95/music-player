@@ -8,14 +8,67 @@
             <div class="container">
                 <div class="player-container">
                     <div class="player-box">
-                        <img class="album-image" src="https://image.bugsm.co.kr/album/images/500/40824/4082425.jpg" />
-                        <div id="ytplayer"></div>
+                        <div class="album-image-box">
+                            <img class="album-image" src="https://image.bugsm.co.kr/album/images/500/40824/4082425.jpg" />
+                            <div id="ytplayer"></div>
+                        </div>
+                        <div class="album-info">
+                            <p class="track">DITTO</p>
+                            <p class="artist">NewJeanse</p>
+                        </div>
                         <div class="player-controller">
-                            <button type="button" class="play-btn">play</button>
-                            <button type="button" class="pause-btn">pause</button>
-                            <progress value="100" class="volume-bar"></progress>
-                            <input type="hidden" value="0" name="volume" />
-                            <button type="button" class="mute-btn">mute</button>
+                            <div class="play-bar-group">
+                                <div class="progress play-bar"></div>
+                                <span class="current-time">1:02</span>
+                                <span class="play-time">3:09</span>
+                                <input type="hidden" value="0" name="playtime" />
+                            </div>
+                            <div class="button-group">
+                                <button type="button" class="side-btn prev-btn">
+                                    <svg width="40" height="36" viewBox="0 0 40 36" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M30 21.4641C32.6667 19.9245 32.6667 16.0755 30 14.5359L15 5.87564C12.3333 4.33604 9 6.26055 9 9.33975V26.6603C9 29.7395 12.3333 31.664 15 30.1244L30 21.4641Z"
+                                        />
+                                        <rect width="4" height="23" rx="2" transform="matrix(-1 0 0 1 40 7)" />
+                                    </svg>
+                                </button>
+                                <button type="button" class="play-btn">
+                                    <svg width="23" height="26" viewBox="0 0 23 26" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M21 9.5359C23.6667 11.0755 23.6667 14.9245 21 16.4641L5.99999 25.1244C3.33333 26.664 0 24.7395 0 21.6603L0 4.33974C0 1.26054 3.33333 -0.663956 6 0.875645L21 9.5359Z"
+                                        />
+                                    </svg>
+                                </button>
+                                <button type="button" class="pause-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-pause-fill" viewBox="0 0 16 16">
+                                        <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z" />
+                                    </svg>
+                                </button>
+                                <button type="button" class="side-btn next-btn">
+                                    <svg width="40" height="36" viewBox="0 0 40 36" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M30 21.4641C32.6667 19.9245 32.6667 16.0755 30 14.5359L15 5.87564C12.3333 4.33604 9 6.26055 9 9.33975V26.6603C9 29.7395 12.3333 31.664 15 30.1244L30 21.4641Z"
+                                        />
+                                        <rect width="4" height="23" rx="2" transform="matrix(-1 0 0 1 40 7)" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="volume-bar-group">
+                                <span
+                                    ><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-volume-off-fill" viewBox="0 0 16 16">
+                                        <path d="M10.717 3.55A.5.5 0 0 1 11 4v8a.5.5 0 0 1-.812.39L7.825 10.5H5.5A.5.5 0 0 1 5 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06z" /></svg
+                                ></span>
+                                <div class="progress volume-bar"></div>
+                                <span
+                                    ><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-volume-up-fill" viewBox="0 0 16 16">
+                                        <path d="M11.536 14.01A8.473 8.473 0 0 0 14.026 8a8.473 8.473 0 0 0-2.49-6.01l-.708.707A7.476 7.476 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303l.708.707z" />
+                                        <path d="M10.121 12.596A6.48 6.48 0 0 0 12.025 8a6.48 6.48 0 0 0-1.904-4.596l-.707.707A5.483 5.483 0 0 1 11.025 8a5.483 5.483 0 0 1-1.61 3.89l.706.706z" />
+                                        <path
+                                            d="M8.707 11.182A4.486 4.486 0 0 0 10.025 8a4.486 4.486 0 0 0-1.318-3.182L8 5.525A3.489 3.489 0 0 1 9.025 8 3.49 3.49 0 0 1 8 10.475l.707.707zM6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06z"
+                                        /></svg
+                                ></span>
+                                <input type="hidden" value="0" name="volume" />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -30,21 +83,41 @@
             var firstScriptTag = document.getElementsByTagName("script")[0];
             firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
+            const $playBtn = document.querySelector(".play-btn");
+            const $pauseBtn = document.querySelector(".pause-btn");
+
             let player;
             function onYouTubePlayerAPIReady() {
                 player = new YT.Player("ytplayer", {
                     height: "300",
                     width: "300",
                     videoId: "Km71Rr9K-Bw",
+                    playerVars: { controls: 0 },
                     events: {
                         onReady: onPlayerReady,
+                        onStateChange: onStateChange,
                     },
                 });
             }
 
             const onPlayerReady = (event) => {
                 event.target.unMute();
-                // event.target.playVideo();
+            };
+
+            const onStateChange = (event) => {
+                console.log(event.data);
+                switch (event.data) {
+                    case 1:
+                        $pauseBtn.style.display = "block";
+                        $playBtn.style.display = "none";
+                        break;
+                    case 2:
+                        $pauseBtn.style.display = "none";
+                        $playBtn.style.display = "block";
+                        break;
+                    default:
+                        break;
+                }
             };
 
             const onPlayerPlay = () => {
@@ -55,17 +128,8 @@
                 player.pauseVideo();
             };
 
-            const onPlayerMute = () => {
-                if (player.isMuted()) {
-                    player.unMute();
-                } else {
-                    player.mute();
-                }
-            };
-
-            document.querySelector(".play-btn").onclick = onPlayerPlay;
-            document.querySelector(".pause-btn").onclick = onPlayerPasue;
-            document.querySelector(".mute-btn").onclick = onPlayerMute;
+            $playBtn.onclick = onPlayerPlay;
+            $pauseBtn.onclick = onPlayerPasue;
         </script>
     </body>
 </html>

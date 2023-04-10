@@ -4,18 +4,125 @@
 }
 
 .player-box {
-    position: absolute;
+    position: relative;
+    text-align: center;
     top: 50%;
     left: 50%;
+    width: 350px;
     transform: translate(-50%, -50%);
 
-    .album-image {
-        position: absolute;
-        z-index: 10;
+    & .album-image-box {
+        position: relative;
         width: 300px;
         height: 300px;
+        margin: 0 auto;
+
+        .album-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            width: 300px;
+            height: 300px;
+            border-radius: 30px;
+        }
+
+        #ytplayer {
+            border-radius: 30px;
+        }
     }
 
-    #ytplayer {
+    .album-info {
+        text-align: left;
+        margin-top: 10px;
+        margin: 10px auto 0;
+        width: 90%;
+
+        & .track {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        & .artist {
+            font-size: 16px;
+            color: lightgray;
+        }
+    }
+
+    .player-controller {
+        margin-top: 20px;
+
+        & .progress {
+            margin: 0 auto;
+            height: 8px;
+            width: 100%;
+            border-radius: 4px;
+            background-color: lightgray;
+            opacity: 0.3;
+        }
+
+        & .play-bar-group {
+            position: relative;
+            font-size: 14px;
+
+            & .play-bar {
+                width: 90%;
+            }
+
+            & .current-time {
+                position: absolute;
+                top: 16px;
+                left: 16px;
+            }
+
+            & .play-time {
+                position: absolute;
+                top: 16px;
+                right: 16px;
+            }
+        }
+
+        & .volume-bar-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 16px auto 0;
+            width: 90%;
+
+            & .volume-bar {
+                width: 80%;
+            }
+        }
+
+        & .button-group {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+
+            & button {
+                box-sizing: content-box;
+                padding: 10px;
+                width: 50px;
+                height: 50px;
+                border: none;
+                border: none;
+                border-radius: 50%;
+                color: white;
+                background-color: inherit;
+
+                &:hover {
+                    color: lightgray;
+                }
+            }
+
+            & .prev-btn {
+                transform: rotateY(180deg);
+            }
+
+            & .pause-btn {
+                display: none;
+            }
+        }
     }
 }
