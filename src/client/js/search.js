@@ -1,5 +1,5 @@
 import { async } from "regenerator-runtime";
-const get = (target) => document.querySelector(target);
+import { get } from "./utils/module.js";
 
 const $searchInput = get("input[name=search-keyword]");
 const $searchBtn = get(".search-btn");
@@ -60,4 +60,6 @@ const handleSearch = () => {
     fetchTrackInfo($searchInput.value);
 };
 
-$searchBtn.onclick = handleSearch;
+export const setSearchModule = () => {
+    $searchBtn.onclick = handleSearch;
+};

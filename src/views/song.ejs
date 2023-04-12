@@ -83,7 +83,7 @@
             <%-include("partials/footer.ejs")%>
         </main>
 
-        <script src="/static/js/main.js"></script>
+        <script src="/static/js/main.js" type="module"></script>
         <script>
             const id = "<%= id %>";
 
@@ -188,8 +188,9 @@
 
             const rotateImage = () => {
                 rotateIntervalID = setInterval(() => {
-                    $imageWrap.style.transform = `rotateZ(${rotate++}deg)`;
-                }, 60);
+                    rotate = rotate + 0.3;
+                    $imageWrap.style.transform = `rotateZ(${rotate}deg)`;
+                }, 10);
             };
 
             const formatTime = (value) => {

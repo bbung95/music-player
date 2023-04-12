@@ -4,6 +4,8 @@
 
 // Components
 @import "./components/search.scss";
+@import "./components/login.scss";
+@import "./components/signup.scss";
 @import "./components/home.scss";
 @import "./components/song.scss";
 @import "./components/footer.scss";
@@ -26,12 +28,23 @@ body {
 }
 
 .background {
+    position: relative;
     height: 100vh;
     width: 100%;
     background-image: none;
     background-repeat: no-repeat;
     background-size: cover;
-    filter: blur(20px);
+    filter: blur(10px);
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: inherit;
+        width: inherit;
+        background-color: rgba(gray, 0.7);
+    }
 }
 
 .main {
@@ -46,4 +59,12 @@ body {
         width: 414px;
         height: 100vh;
     }
+}
+
+.divider {
+    margin: 10px 0;
+    width: 100%;
+    height: 1px;
+    border-radius: 1px;
+    background-color: rgba(lightgray, 0.7);
 }
