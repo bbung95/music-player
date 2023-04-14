@@ -1,7 +1,8 @@
 import { async } from "regenerator-runtime";
 import { get } from "./utils/module.js";
+import axios from "axios";
 
-const $navigationTabs = get(".nav-tabs");
+const $navigation = get(".navigation");
 const $searchContainer = get(".search-container");
 const $searchListBox = get(".search-list-box");
 const $searchInput = get("input[name=search-keyword]");
@@ -10,12 +11,23 @@ const $backBtn = get(".back-btn");
 
 let listData = [];
 
-const playSong = (title, artist) => {
+const playSong = async (title, artist) => {
     const findData = listData.find(({ track }) => title === track.name && artist === track.artist.name);
 
-    location.href = `/song/${findData.track.artist.name}/${findData.track.name}?thumbnail=${
-        findData.track.album?.image[2]["#text"] || "https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png"
-    }`;
+    const res = await axios({
+        method: "post",
+        url: "/api/song",
+        data: {
+            title: findData.track.name,
+            artist: findData.track.artist.name,
+            thumbnail: findData.track.album?.image[2]["#text"] ?? "empty_song.png",
+        },
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+
+    setPlayerSong(res.data.data._id);
 };
 
 const setSearchItem = ({ data }) => {
@@ -67,6 +79,6 @@ export const setSearchModule = () => {
     $searchBtn.onclick = handleSearch;
     $backBtn.onclick = () => {
         $searchContainer.classList.toggle("active");
-        $navigationTabs.classList.toggle("search");
+        $navigation.classList.toggle("search");
     };
 };

@@ -3,6 +3,7 @@ import { setSearchModule } from "./search.js";
 import { setLoginModule } from "./login.js";
 import { setSignupModule } from "./signup.js";
 import { setNavigationModule } from "./navigation.js";
+import { setHomeModule } from "./home";
 
 // 페이지 새로고침
 window.onpageshow = function (event) {
@@ -21,5 +22,7 @@ switch (path) {
         setSignupModule();
         break;
 }
+
+setHomeModule();
 setSearchModule();
 setNavigationModule();

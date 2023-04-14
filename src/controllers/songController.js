@@ -5,29 +5,21 @@ import axios from "axios";
 
 const API_END_POINT = "https://ws.audioscrobbler.com/2.0/";
 
-export const song = async (req, res) => {
-    return res.render("song", { pageTitle: "Song" });
-};
-
 export const playSong = async (req, res) => {
-    let data = {
-        title: req.params.title,
-        artist: req.params.artist,
-        thumbnail: req.query?.thumbnail,
-    };
+    let body = req.body;
 
-    const findSong = await Song.findOne({ title: data.title, artist: data.artist });
+    const findSong = await Song.findOne({ title: body.title, artist: body.artist });
     // 등록
     if (!findSong) {
-        const videoId = await getYoutubeId(data.title, data.artist);
-        data = { ...data, videoId: videoId };
-        const song = new Song(data);
+        const videoId = await getYoutubeId(body.title, body.artist);
+        body = { ...body, videoId: videoId };
+        const song = new Song(body);
         await song.save();
-        await res.render("song", { pageTitle: "Song", id: song.id });
+        await res.json({ data: song });
     } else {
         // 카운트 업
         await findSong.update({ playcount: findSong.playcount + 1 });
-        await res.render("song", { pageTitle: "Song", id: findSong.id });
+        await res.json({ data: findSong });
     }
 };
 
@@ -57,6 +49,12 @@ export const searchSongList = async (req, res) => {
     }
 
     return res.json(newTracks);
+};
+
+export const getTrendingList = async (req, res) => {
+    const list = await Song.find({}).sort({ playcount: "desc" }).limit(10);
+
+    return res.json(list);
 };
 
 const getYoutubeId = async (album, artist) => {

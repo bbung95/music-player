@@ -1,16 +1,18 @@
 <div class="player-container">
     <div class="background"></div>
-    <button class="top-btn"></button>
+    <div class="top-box">
+        <button class="top-btn"></button>
+    </div>
     <div class="player-box">
         <div class="album-image-box">
-            <!-- <div class="image-wrap">
-                <img class="album-image" src="" />
-            </div> -->
+            <div class="image-wrap">
+                <img class="album-image" src="empty_song.png" />
+            </div>
             <div id="ytplayer"></div>
         </div>
         <div class="album-info">
-            <p class="track">ditto</p>
-            <p class="artist">newjeans</p>
+            <p class="track">재생 중이 아님</p>
+            <p class="artist"></p>
         </div>
         <div class="player-controller">
             <div class="play-bar-group">
@@ -80,8 +82,8 @@
     const $playBtn = document.querySelector(".play-btn");
     const $pauseBtn = document.querySelector(".pause-btn");
     const $nextBtn = document.querySelector(".next-btn");
-    const $topBtn = document.querySelector(".top-btn");
-    // const $imageWrap = document.querySelector(".image-wrap");
+    const $topBox = document.querySelector(".top-box");
+    const $imageWrap = document.querySelector(".image-wrap");
     const $playBar = document.querySelector(".play-bar");
     const $volumeBar = document.querySelector(".volume-bar");
 
@@ -90,14 +92,14 @@
 
     const $trackTitle = document.querySelector(".track");
     const $artist = document.querySelector(".artist");
-    // const $thumbnail = document.querySelector(".album-image");
+    const $thumbnail = document.querySelector(".album-image");
 
     let player;
     function onYouTubePlayerAPIReady() {
         player = new YT.Player("ytplayer", {
             height: "300",
             width: "300",
-            videoId: "11cta61wi0g",
+            videoId: "",
             playerVars: { controls: 0 },
             events: {
                 onReady: onPlayerReady,
@@ -127,9 +129,9 @@
             case 0:
                 onPlayerPasue();
                 $currentTime.textContent = formatTime(player.getDuration());
-                const res = fetchGetSong();
+                // const res = fetchGetSong();
                 // 유튜브 아이디로 바로 시작
-                player.loadVideoById(await res, 0, "small");
+                // player.loadVideoById(await res, 0, "small");
                 break;
             case 1:
                 $pauseBtn.style.display = "block";
@@ -209,29 +211,42 @@
         clearInterval(playTimeIntervalID);
     };
 
-    $playBtn.onclick = onPlayerPlay;
-    $pauseBtn.onclick = onPlayerPasue;
-    $playBar.onclick = onChangePlayTime;
-    $volumeBar.onclick = onChangeVolume;
-    $nextBtn.onclick = () => console.log("앞으로");
-    $topBtn.onclick = () => {
+    const fetchGetSong = async (id) => {
+        const res = await axios.get(`/api/song/${id}`);
+
+        return res.data.data;
+    };
+
+    const setPlayerSong = async (id) => {
+        const { title, artist, thumbnail, videoId } = await fetchGetSong(id);
+
+        $trackTitle.textContent = title;
+        $artist.textContent = artist;
+        $thumbnail.src = thumbnail ?? "/public/empty_song.png";
+        document.querySelector(".background").style.setProperty("background-image", `url(${thumbnail})`);
+        // 싫행
+        player.loadVideoById(videoId, 0, "small");
+    };
+
+    const showPlayer = () => {
         $playerContainer.classList.toggle("active");
         document.querySelector(".main").classList.toggle("disable");
         document.querySelector(".navigation").classList.toggle("disable");
     };
 
-    const fetchGetSong = async () => {
-        const id = "643407413f64fe82dac36fe3";
+    $playBtn.onclick = onPlayerPlay;
+    $pauseBtn.onclick = onPlayerPasue;
+    $playBar.onclick = onChangePlayTime;
+    $volumeBar.onclick = onChangeVolume;
+    $nextBtn.onclick = () => console.log("앞으로");
+    $topBox.onclick = showPlayer;
+    $playerContainer.onclick = (e) => {
+        let target = e.target;
 
-        const res = await axios.get(`/api/song/${id}`);
+        console.log(target);
 
-        const { title, artist, thumbnail } = res.data.data;
-
-        $trackTitle.textContent = title;
-        $artist.textContent = artist;
-        // $thumbnail.src = thumbnail;
-        // document.querySelector(".background").style.setProperty("background-image", `url(${thumbnail})`);
-
-        return res.data.data.videoId;
+        if (!$playerContainer.className.includes("active")) {
+            if (target.className === "player-controller" || target.className === "album-image" || target.className === "track" || target.className === "artist") showPlayer();
+        }
     };
 </script>

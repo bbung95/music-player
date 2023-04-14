@@ -5,21 +5,31 @@
     height: 100%;
     width: 100vw;
     border-top: 1px solid rgba(gray, 0.7);
-    // transition:  3s;
 
-    & .top-btn {
+    & .top-box {
+        cursor: pointer;
         position: absolute;
-        left: 50%;
-        top: 20px;
-        width: 120px;
-        height: 6px;
-        border: none;
-        border-radius: 5px;
-        background: lightgray;
-        transform: translateX(-50%);
+        width: 100vw;
+        height: 40px;
+
+        & .top-btn {
+            cursor: pointer;
+            position: absolute;
+            top: 20px;
+            margin: 0 auto;
+            left: 50%;
+            width: 120px;
+            height: 6px;
+            border: none;
+            border-radius: 5px;
+            background: lightgray;
+            transform: translateX(-50%);
+        }
 
         &:hover {
-            background-color: white;
+            & .top-btn {
+                background-color: white;
+            }
         }
     }
 
@@ -49,7 +59,6 @@
         top: 50%;
         left: 50%;
         width: 350px;
-        // transition-duration: 3s;
         transform: translate(-50%, -50%);
 
         & .album-image-box {
@@ -97,8 +106,9 @@
                     width: 80px;
                     height: 80px;
                     border-radius: 50%;
+                    border: 1px solid lightgray;
                     background-color: white;
-                    filter: blur(3px);
+                    // filter: blur(3px);
                     transform: translate(-50%, -50%);
                 }
             }
@@ -185,6 +195,7 @@
                 margin-top: 20px;
 
                 & button {
+                    cursor: pointer;
                     box-sizing: content-box;
                     padding: 10px;
                     width: 50px;
@@ -220,6 +231,7 @@
     width: calc(100vw - 100px);
     background-color: rgba(rgb(175, 175, 175), 0.6);
     // transition: all 0.7s;
+    z-index: 10;
 
     & .top-btn {
         display: none;
@@ -227,6 +239,7 @@
 
     & .background {
         display: none;
+        opacity: 0;
     }
 
     .player-box {
@@ -312,6 +325,7 @@
                 width: 200px;
 
                 & button {
+                    cursor: pointer;
                     box-sizing: content-box;
                     padding: 10px;
                     width: 40px;
@@ -386,13 +400,13 @@
 
 @media screen and (max-width: $screen-mobile) {
     .player-container:not(.active) {
-        bottom: 80px;
+        bottom: 60px;
         left: 50%;
-        width: 360px;
+        width: 100%;
         transform: translateX(-50%);
 
         & .player-box {
-            justify-content: flex-end;
+            // justify-content: flex-end;
 
             & .album-info {
                 width: 40% !important;
@@ -401,7 +415,7 @@
 
         & .player-controller {
             & .button-group {
-                left: 0px !important;
+                left: 20px !important;
                 margin-top: 10px !important;
                 width: fit-content !important;
 
@@ -427,8 +441,23 @@
             }
 
             & .volume-bar-group {
-                display: none !important;
+                // display: none !important;
+                width: 150px !important;
             }
+        }
+    }
+}
+
+@media screen and (max-width: $screen-sm) {
+    .player-container:not(.active) {
+        & .player-box {
+            & .album-image-box {
+                margin-left: 120px;
+            }
+        }
+
+        & .volume-bar-group {
+            display: none !important;
         }
     }
 }
