@@ -1,9 +1,12 @@
 import { async } from "regenerator-runtime";
 import { get } from "./utils/module.js";
 
+const $navigationTabs = get(".nav-tabs");
+const $searchContainer = get(".search-container");
+const $searchListBox = get(".search-list-box");
 const $searchInput = get("input[name=search-keyword]");
 const $searchBtn = get(".search-btn");
-const $searchListBox = get(".search-list-box");
+const $backBtn = get(".back-btn");
 
 let listData = [];
 
@@ -62,4 +65,8 @@ const handleSearch = () => {
 
 export const setSearchModule = () => {
     $searchBtn.onclick = handleSearch;
+    $backBtn.onclick = () => {
+        $searchContainer.classList.toggle("active");
+        $navigationTabs.classList.toggle("search");
+    };
 };

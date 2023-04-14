@@ -1,8 +1,8 @@
 import "../scss/styles.scss";
-// import "./footer";
-import { setSearchModule } from "./search";
+import { setSearchModule } from "./search.js";
 import { setLoginModule } from "./login.js";
 import { setSignupModule } from "./signup.js";
+import { setNavigationModule } from "./navigation.js";
 
 // 페이지 새로고침
 window.onpageshow = function (event) {
@@ -20,7 +20,6 @@ switch (path) {
     case "/signup":
         setSignupModule();
         break;
-    case "/search":
-        setSearchModule();
-        break;
 }
+setSearchModule();
+setNavigationModule();

@@ -2,6 +2,7 @@
 <html lang="en">
     <%-include("partials/head.ejs")%>
     <body>
+        <%-include("partials/navigation.ejs")%>
         <main class="main">
             <div class="container">
                 <section class="trending-container">
@@ -22,8 +23,8 @@
             </div>
         </main>
 
-        <%-include("partials/footer.ejs")%>
-
         <script src="/static/js/main.js" type="module"></script>
+
+        <%-include("components/song.ejs")%>
     </body>
 </html>
