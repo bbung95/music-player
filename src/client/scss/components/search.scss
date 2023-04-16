@@ -3,6 +3,7 @@
     margin: 0 auto 100px;
     height: calc(100vh - 160px);
     width: $mobile-width;
+    backdrop-filter: blur(10px);
 
     &.active {
         display: block;

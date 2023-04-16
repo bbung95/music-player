@@ -6,9 +6,7 @@
     & > .title {
         padding: 8px 14px;
         width: fit-content;
-        font-size: 16px;
-        border-radius: 14px;
-        background-color: rgba(lightgray, 0.7);
+        font-size: 30px;
     }
 
     & .trending-list-box {
@@ -56,6 +54,65 @@
             &:hover {
                 background-color: rgba(lightgray, 0.2);
                 border-radius: 12px;
+            }
+        }
+    }
+}
+
+@media screen and (min-width: $screen-pc) {
+    .trending-container {
+        margin: 0 auto;
+        padding-top: 40px;
+        width: 80%;
+
+        & > .title {
+            padding: 8px 14px;
+            width: fit-content;
+            font-size: 30px;
+        }
+
+        & .trending-list-box {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            height: auto;
+            background-color: inherit;
+
+            & .trending-item {
+                box-sizing: border-box;
+                width: 50%;
+                height: 80px;
+
+                & img {
+                    width: 60px;
+                    height: 60px;
+                    border-radius: 12px;
+                }
+
+                & .item-info {
+                    width: 55%;
+                    & .title {
+                        font-size: 20px;
+                        font-weight: bold;
+                        margin-bottom: 6px;
+                    }
+
+                    & .artist {
+                        font-size: 14px;
+                        color: rgb(237, 237, 237);
+                    }
+                }
+
+                .play-count {
+                    margin-left: auto;
+                    padding: 0;
+                }
+
+                &:hover {
+                    background-color: rgba(lightgray, 0.2);
+                    border-radius: 12px;
+                }
             }
         }
     }

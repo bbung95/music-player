@@ -45,6 +45,25 @@ body {
     transition-duration: 0.5s;
 }
 
+@media screen and (min-width: $screen-pc) {
+    .main {
+        margin-left: 100px;
+        width: calc(100% - 100px);
+
+        & .container {
+            width: $screen-pc;
+            height: 100vh;
+        }
+    }
+}
+
+@media screen and (min-width: $screen-mobile) {
+    .main {
+        margin-left: 100px;
+        width: calc(100% - 100px);
+    }
+}
+
 .hidden {
     display: none;
 }

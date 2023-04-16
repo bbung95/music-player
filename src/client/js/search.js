@@ -14,6 +14,8 @@ let listData = [];
 const playSong = async (title, artist) => {
     const findData = listData.find(({ track }) => title === track.name && artist === track.artist.name);
 
+    console.log(listData);
+
     const res = await axios({
         method: "post",
         url: "/api/song",
@@ -39,7 +41,7 @@ const setSearchItem = ({ data }) => {
         const el = document.createElement("li");
         el.className = "search-item";
         el.onclick = () => playSong(track.name, track.artist.name);
-        el.innerHTML = `<img src="${track.album?.image[2]["#text"] || "https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png"}" />
+        el.innerHTML = `<img src="${track.album?.image[3]["#text"] || "https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png"}" />
             <div class="item-info">
                 <div class="title">${track.name}</div>
                 <div class="artist">${track.artist.name}</div>
