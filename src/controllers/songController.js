@@ -31,7 +31,9 @@ export const getSong = async (req, res) => {
 export const updatePlayCount = async (req, res) => {
     const id = req.params.id;
     const findSong = await Song.findById(id);
-    Song.updateOne({ _id: id }, { playcount: findSong.playcount + 1 });
+
+    console.log(findSong);
+    await Song.update({ _id: id }, { playcount: findSong.playcount + 1 });
 
     res.json();
 };
@@ -67,7 +69,11 @@ export const getTrendingList = async (req, res) => {
 const getYoutubeId = async (album, artist) => {
     const keyword = album + "+" + artist;
     const url = `https://www.googleapis.com/youtube/v3/search?part=id&q=${keyword}&type=video&maxResults=1&key=${process.env.YOUTUBE_API_KEY}`;
-    const res = await axios.get(url);
+    const res = await axios.get(url, {
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+        },
+    });
 
     return res.data.items[0].id.videoId;
 };

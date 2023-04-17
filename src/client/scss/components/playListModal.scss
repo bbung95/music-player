@@ -1,0 +1,56 @@
+#play-list-modal {
+    width: 250px;
+    border: none;
+    border-radius: 20px;
+    background: white;
+
+    & .modal-container {
+        & > .title {
+            font-size: 20px;
+        }
+
+        & .list-box {
+            list-style: none;
+            height: 250px;
+            overflow: auto;
+            margin-top: 16px;
+            margin-bottom: 16px;
+
+            & .list-item {
+                cursor: pointer;
+                height: 50px;
+                border-radius: 8px;
+
+                & .title {
+                    display: flex;
+                    align-items: center;
+                    height: 100%;
+                    padding-left: 10px;
+                }
+
+                &:hover {
+                    background-color: rgba(lightgray, 0.7);
+                }
+            }
+        }
+
+        & button {
+            cursor: pointer;
+            height: 40px;
+            width: 100%;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            transition: all 0.2s;
+
+            &:hover {
+                scale: 1.03;
+            }
+        }
+
+        & .cancel-btn {
+            background: rgba(lightgray, 0.7);
+            color: rgba(black, 0.5);
+        }
+    }
+}

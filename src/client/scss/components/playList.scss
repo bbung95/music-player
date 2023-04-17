@@ -76,7 +76,6 @@
 
                 & .title {
                     font-size: 20px;
-                    overflow: hidden;
                 }
 
                 & .count {
@@ -87,7 +86,7 @@
     }
 }
 
-#play-list-modal {
+#play-list-add-modal {
     width: 250px;
     height: fit-content;
     border: none;

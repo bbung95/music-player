@@ -81,6 +81,7 @@
     const $playerContainer = document.querySelector(".player-container");
     const $playBtn = document.querySelector(".play-btn");
     const $pauseBtn = document.querySelector(".pause-btn");
+    const $prevBtn = document.querySelector(".prev-btn");
     const $nextBtn = document.querySelector(".next-btn");
     const $topBox = document.querySelector(".top-box");
     const $imageWrap = document.querySelector(".image-wrap");
@@ -95,6 +96,9 @@
     const $thumbnail = document.querySelector(".album-image");
 
     let player;
+    let playerQueue = [];
+    let index = 0;
+
     function onYouTubePlayerAPIReady() {
         player = new YT.Player("ytplayer", {
             height: "300",
@@ -102,7 +106,7 @@
             videoId: "",
             playerVars: { controls: 0 },
             events: {
-                onReady: onPlayerReady,
+                // onReady: onPlayerReady,
                 onStateChange: onStateChange,
             },
         });
@@ -125,25 +129,35 @@
      * 5 중지
      */
     const onStateChange = async (event) => {
-        console.log(event.data);
-
         switch (event.data) {
             case 0:
-                onPlayerPasue();
                 $pauseBtn.style.display = "none";
                 $playBtn.style.display = "block";
                 $currentTime.textContent = formatTime(player.getDuration());
-                // const res = fetchGetSong();
                 // 유튜브 아이디로 바로 시작
-                // player.loadVideoById(await res, 0, "small");
+
+                index += 1;
+
+                if (playerQueue[index]) {
+                    playerSong(playerQueue[index]);
+                } else {
+                    index = 0;
+                    playerSong(playerQueue[index]);
+                    // onPlayerPasue();
+                }
+
+                fetchUpdatePlayCount(playerQueue[index]._id);
                 break;
             case 1:
                 $pauseBtn.style.display = "block";
                 $playBtn.style.display = "none";
                 // player 셋팅
                 onPlayerReady(event);
+                onPlayerPlay();
                 break;
             case 2:
+                isPlay = false;
+                isRotate = false;
                 $pauseBtn.style.display = "none";
                 $playBtn.style.display = "block";
                 break;
@@ -158,12 +172,19 @@
     let rotateIntervalID = "";
     let playTimeIntervalID = "";
     let rotate = 0;
+    let isPlay = false;
+    let isRotate = false;
 
     const rotateImage = () => {
-        rotateIntervalID = setInterval(() => {
-            rotate = rotate + 0.3;
-            // $imageWrap.style.transform = `rotateZ(${rotate}deg)`;
-        }, 10);
+        if ($playerContainer.className.includes("active") && !isRotate && isPlay) {
+            console.log("실행");
+            isRotate = true;
+
+            rotateIntervalID = setInterval(() => {
+                rotate = rotate + 0.3;
+                $imageWrap.style.transform = `rotateZ(${rotate}deg)`;
+            }, 10);
+        }
     };
 
     const onChangePlayTime = (e) => {
@@ -203,10 +224,20 @@
         return minute + ":" + seconds;
     };
 
+    const setPlayTime = () => {
+        isPlay = true;
+        playTimeIntervalID = setInterval(() => {
+            $currentTime.textContent = formatTime(player.getCurrentTime());
+            const percent = player.getCurrentTime() / (player.getDuration() / 100);
+            $playBar.querySelector(".bar").style.width = percent + "%";
+        }, 1000);
+    };
+
     const onPlayerPlay = () => {
-        player.playVideo();
-        rotateImage();
-        setPlayTime();
+        if (!isPlay) {
+            rotateImage();
+            setPlayTime();
+        }
     };
 
     const onPlayerPasue = () => {
@@ -231,9 +262,7 @@
         return res.data.data;
     };
 
-    const setPlayerSong = async (id) => {
-        const { title, artist, thumbnail, videoId } = await fetchGetSong(id);
-
+    const playerSong = ({ title, artist, thumbnail, videoId }) => {
         $trackTitle.textContent = title;
         $artist.textContent = artist;
         $thumbnail.src = thumbnail ?? "/public/empty_song.png";
@@ -242,17 +271,58 @@
         player.loadVideoById(videoId, 0, "small");
     };
 
+    const playerSongs = (playListData) => {
+        playerQueue = playListData;
+        index = 0;
+        playerSong(playerQueue[index]);
+    };
+
+    const setPlayerSong = async (id) => {
+        const data = await fetchGetSong(id);
+        index = 0;
+        playerQueue = [data];
+
+        playerSong(data);
+    };
+
     const showPlayer = () => {
         $playerContainer.classList.toggle("active");
         document.querySelector(".main").classList.toggle("disable");
         document.querySelector(".navigation").classList.toggle("disable");
+
+        if (!$playerContainer.className.includes("active")) {
+            isRotate = false;
+            clearInterval(rotateIntervalID);
+            $imageWrap.style.transform = `rotateZ(0deg)`;
+        } else {
+            rotateImage();
+        }
     };
 
-    $playBtn.onclick = onPlayerPlay;
+    const onClickPrevSong = () => {
+        if (playerQueue[index - 1]) {
+            index -= 1;
+            playerSong(playerQueue[index]);
+        } else {
+            alert("이전곡이 존재하지않습니다.");
+        }
+    };
+
+    const onClickNextSong = () => {
+        if (playerQueue[index + 1]) {
+            index += 1;
+            playerSong(playerQueue[index]);
+        } else {
+            alert("다음곡이 존재하지않습니다.");
+        }
+    };
+
+    $playBtn.onclick = () => player.playVideo();
     $pauseBtn.onclick = onPlayerPasue;
     $playBar.onclick = onChangePlayTime;
     $volumeBar.onclick = onChangeVolume;
-    $nextBtn.onclick = () => console.log("앞으로");
+    $prevBtn.onclick = onClickPrevSong;
+    $nextBtn.onclick = onClickNextSong;
     $topBox.onclick = showPlayer;
     $playerContainer.onclick = (e) => {
         let target = e.target;

@@ -1,6 +1,7 @@
 import { async } from "regenerator-runtime";
 import { get } from "./utils/module.js";
 import axios from "axios";
+import { openModal } from "./playListModal.js";
 
 const $navigation = get(".navigation");
 const $searchContainer = get(".search-container");
@@ -11,7 +12,7 @@ const $backBtn = get(".back-btn");
 
 let listData = [];
 
-const playSong = async (title, artist) => {
+const fetchAddSong = async (title, artist) => {
     const findData = listData.find(({ track }) => title === track.name && artist === track.artist.name);
 
     const res = await axios({
@@ -20,14 +21,28 @@ const playSong = async (title, artist) => {
         data: {
             title: findData.track.name,
             artist: findData.track.artist.name,
-            thumbnail: findData.track.album?.image[2]["#text"] ?? "empty_song.png",
+            thumbnail: findData.track.album?.image[3]["#text"] ?? "empty_song.png",
         },
         headers: {
             "Content-Type": "application/json",
         },
     });
 
+    return res;
+};
+
+const playSong = async (title, artist) => {
+    const res = await fetchAddSong(title, artist);
+
     setPlayerSong(res.data.data._id);
+};
+
+const handleOnClickOptionBtn = async (e, title, artist) => {
+    e.stopPropagation();
+
+    const res = await fetchAddSong(title, artist);
+
+    openModal(res.data.data._id);
 };
 
 const setSearchItem = ({ data }) => {
@@ -41,9 +56,20 @@ const setSearchItem = ({ data }) => {
         el.onclick = () => playSong(track.name, track.artist.name);
         el.innerHTML = `<img src="${track.album?.image[3]["#text"] || "https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png"}" />
             <div class="item-info">
-                <div class="title">${track.name}</div>
-                <div class="artist">${track.artist.name}</div>
+                <div class="title truncate">${track.name}</div>
+                <div class="artist truncate">${track.artist.name}</div>
             </div>`;
+
+        const optionButton = document.createElement("button");
+        optionButton.className = "option-btn";
+        optionButton.type = "button";
+        optionButton.onclick = (e) => handleOnClickOptionBtn(e, track.name, track.artist.name);
+
+        optionButton.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+            </svg>`;
+        el.append(optionButton);
 
         $searchListBox.append(el);
     });

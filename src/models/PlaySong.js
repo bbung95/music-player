@@ -6,6 +6,6 @@ const playSongSchema = new mongoose.Schema({
     order: { type: Number, required: true, default: 0 },
 });
 
-const PlaySong = mongoose.model("PlaySong", playSchema);
+const PlaySong = mongoose.model("PlaySong", playSongSchema);
 
 export default PlaySong;

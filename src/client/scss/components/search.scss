@@ -111,7 +111,7 @@
             & .item-info {
                 width: 55%;
                 & .title {
-                    font-size: 20px;
+                    font-size: 18px;
                     font-weight: bold;
                     margin-bottom: 6px;
                 }
@@ -119,6 +119,21 @@
                 & .artist {
                     font-size: 14px;
                     color: rgb(237, 237, 237);
+                }
+            }
+
+            & .option-btn {
+                position: absolute;
+                cursor: pointer;
+                right: 0;
+                height: 60px;
+                width: 60px;
+                color: white;
+                border: none;
+                background: none;
+
+                &:hover {
+                    color: lightgray;
                 }
             }
         }

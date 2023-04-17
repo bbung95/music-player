@@ -2,7 +2,7 @@ import express from "express";
 import { home } from "../controllers/homeController";
 import { song, playSong, searchSongList, getSong, getTrendingList, updatePlayCount } from "../controllers/songController";
 import { addUser, login, loginUser, logoutUser, signup } from "../controllers/userController";
-import { addPlayList, getPlayList } from "../controllers/playListController";
+import { addPlayList, addPlayListSong, getPlayList, getPlayListSong, removePlayList, removePlayListSong } from "../controllers/playListController";
 
 const rootRouter = express.Router();
 
@@ -19,6 +19,10 @@ rootRouter.get("/api/song/:id", getSong);
 rootRouter.put("/api/song/:id", updatePlayCount);
 rootRouter.get("/api/songs/trending", getTrendingList);
 rootRouter.get("/api/playlist", getPlayList);
+rootRouter.get("/api/playlist/:id", getPlayListSong);
 rootRouter.post("/api/playlist", addPlayList);
+rootRouter.post("/api/playlist/:id", addPlayListSong);
+rootRouter.delete("/api/playlist/:id", removePlayList);
+rootRouter.delete("/api/playlist/song/:id", removePlayListSong);
 
 export default rootRouter;

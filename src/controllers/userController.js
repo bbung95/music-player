@@ -3,10 +3,22 @@ import User from "../models/User";
 import axios from "axios";
 
 export const login = async (req, res) => {
+    const session = res.locals;
+
+    if (session.loggedIn) {
+        return res.redirect("/");
+    }
+
     return res.render("login", { pageTitle: "Login" });
 };
 
 export const signup = async (req, res) => {
+    const session = res.locals;
+
+    if (session.loggedIn) {
+        return res.redirect("/");
+    }
+
     return res.render("signup", { pageTitle: "Signup" });
 };
 

@@ -10,6 +10,8 @@
 @import "./components/home.scss";
 @import "./components/song.scss";
 @import "./components/playList.scss";
+@import "./components/playListModal.scss";
+@import "./components/playListSong.scss";
 
 // Screens
 // Example: @import "./screens/search.scss";
@@ -82,4 +84,10 @@ body {
     height: 1px;
     border-radius: 1px;
     background-color: rgba(lightgray, 0.7);
+}
+
+.truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

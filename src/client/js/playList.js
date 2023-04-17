@@ -1,24 +1,25 @@
 import axios from "axios";
 import { get } from "./utils/module";
 import { async } from "regenerator-runtime";
+import { openPlayListSong } from "./playListSong";
 
 const $playListTitle = get(".play-list-container .title");
 const $playListBox = get(".play-list-box");
 
 const $playListAddModalBtn = get(".play-list-container .add-modal-btn");
-const $playListModal = get("#play-list-modal");
-const $modalAddBtn = get(".add-btn");
-const $modalCancelBtn = get(".cancel-btn");
-const $playListTitleInput = get("input[name=title]");
+const $playListAddModal = get("#play-list-add-modal");
+const $modalAddBtn = $playListAddModal.querySelector(".add-btn");
+const $modalCancelBtn = $playListAddModal.querySelector(".cancel-btn");
+const $playListTitleInput = $playListAddModal.querySelector("input[name=title]");
 
-const fetchGetAuthPlayList = async () => {
+export const fetchGetPlayList = async () => {
     const res = await axios.get("/api/playlist");
 
     return res.data.data;
 };
 
-const setPlayListBox = async () => {
-    const data = await fetchGetAuthPlayList();
+export const setPlayListBox = async () => {
+    const data = await fetchGetPlayList();
 
     if (data.length > 0) {
         $playListBox.innerHTML = "";
@@ -26,11 +27,12 @@ const setPlayListBox = async () => {
         data.forEach((item) => {
             const el = document.createElement("li");
             el.className = "play-list-item";
+            el.onclick = () => openPlayListSong(item._id);
             el.innerHTML = `
-                  <img class="play-list-img" src="https://via.placeholder.com/180X180">
+                  <img class="play-list-img" src="${item.thumbnail ?? "empty_song.png"}">
                   <div class="info">
-                    <div class="title">${item.title}</div>
-                    <p class="count">3곡</p>
+                    <div class="title truncate">${item.title}</div>
+                    <p class="count">${item.count}곡</p>
                   </div>
                 `;
 
@@ -67,42 +69,38 @@ const fetchAddPlayList = (title) => {
     return res;
 };
 
-const addPlayList = () => {
+const addPlayList = async () => {
     const title = $playListTitleInput.value;
     if (!title) {
         alert("타이틀을 입력해주세요.");
         return;
     }
 
-    const res = fetchAddPlayList(title);
+    const res = await fetchAddPlayList(title);
 
     if (!res) return;
 
     $playListTitleInput.value = "";
     setPlayListBox();
-    $playListModal.close();
+    $playListAddModal.close();
 };
 
 export const setPlayListModule = () => {
     setPlayListContainer();
 
     $playListAddModalBtn.onclick = () => {
-        $playListModal.showModal();
+        $playListAddModal.showModal();
     };
-
     $modalAddBtn.onclick = addPlayList;
-
     $modalCancelBtn.onclick = () => {
-        $playListModal.close();
+        $playListAddModal.close();
     };
-
     if (isLogin == "false") {
         $playListAddModalBtn.remove();
     }
-
-    $playListModal.onclick = (event) => {
+    $playListAddModal.onclick = (event) => {
         if (event.target.nodeName === "DIALOG") {
-            $playListModal.close();
+            $playListAddModal.close();
         }
     };
 };
