@@ -5,10 +5,22 @@
         <%-include("partials/navigation.ejs")%>
         <main class="main">
             <div class="container">
+                <!-- <section class="play-list-container">
+                    <h1 class="title">Play List</h1>
+                    <ul class="play-list-box empty-item">
+                        <div class="empty-item">
+                            <div>로그인 필요</div>
+                            <p><a href="/login">로그인</a>시 이용 가능합니다.</p>
+                        </div>
+                    </ul>
+                </section> -->
+
                 <section class="trending-container">
                     <h1 class="title">TOP 10</h1>
                     <ul class="trending-list-box"></ul>
                 </section>
+
+                <%-include("components/playList.ejs")%>
             </div>
         </main>
 

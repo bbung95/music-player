@@ -125,9 +125,13 @@
      * 5 중지
      */
     const onStateChange = async (event) => {
+        console.log(event.data);
+
         switch (event.data) {
             case 0:
                 onPlayerPasue();
+                $pauseBtn.style.display = "none";
+                $playBtn.style.display = "block";
                 $currentTime.textContent = formatTime(player.getDuration());
                 // const res = fetchGetSong();
                 // 유튜브 아이디로 바로 시작
@@ -211,6 +215,16 @@
         clearInterval(playTimeIntervalID);
     };
 
+    const fetchUpdatePlayCount = (id) => {
+        axios({
+            url: `/api/song/${id}`,
+            method: "put",
+            Headers: {
+                "Content-Type": "application/json",
+            },
+        });
+    };
+
     const fetchGetSong = async (id) => {
         const res = await axios.get(`/api/song/${id}`);
 
@@ -242,8 +256,6 @@
     $topBox.onclick = showPlayer;
     $playerContainer.onclick = (e) => {
         let target = e.target;
-
-        console.log(target);
 
         if (!$playerContainer.className.includes("active")) {
             if (target.className === "player-controller" || target.className === "album-image" || target.className === "track" || target.className === "artist") showPlayer();

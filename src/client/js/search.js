@@ -14,8 +14,6 @@ let listData = [];
 const playSong = async (title, artist) => {
     const findData = listData.find(({ track }) => title === track.name && artist === track.artist.name);
 
-    console.log(listData);
-
     const res = await axios({
         method: "post",
         url: "/api/song",
@@ -68,8 +66,8 @@ const fetchTrackInfo = async (value) => {
     });
 
     if (res.status === 200) {
-        setSearchItem(res);
-        listData = res.data;
+        setSearchItem(res.data);
+        listData = res.data.data;
     }
 };
 

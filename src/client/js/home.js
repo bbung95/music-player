@@ -7,7 +7,7 @@ const $trendingListBox = get(".trending-list-box");
 const fetchGetTrendingList = async () => {
     const res = await axios.get("/api/songs/trending");
 
-    return res.data;
+    return res.data.data;
 };
 
 const setTrendingListBox = async () => {

@@ -4,6 +4,7 @@ import { setLoginModule } from "./login.js";
 import { setSignupModule } from "./signup.js";
 import { setNavigationModule } from "./navigation.js";
 import { setHomeModule } from "./home";
+import { setPlayListModule } from "./playList";
 
 // 페이지 새로고침
 window.onpageshow = function (event) {
@@ -21,8 +22,9 @@ switch (path) {
     case "/signup":
         setSignupModule();
         break;
+    default:
+        setHomeModule();
+        setSearchModule();
+        setNavigationModule();
+        setPlayListModule();
 }
-
-setHomeModule();
-setSearchModule();
-setNavigationModule();

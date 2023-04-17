@@ -22,10 +22,41 @@ const fetchSignUp = async (values) => {
     return res;
 };
 
+const formValidation = (obj) => {
+    if (!obj.name) {
+        alert("사용자 이름을 입력해주세요.");
+        return false;
+    }
+
+    if (!obj.password) {
+        alert("비밀번호를 입력해주세요.");
+        return false;
+    }
+
+    if (!obj.nickname) {
+        alert("닉네임을 입력해주세요.");
+        return false;
+    }
+
+    return true;
+};
+
 const onSubmitSignup = async (e) => {
     e.preventDefault();
 
-    const res = await fetchSignUp({ name: "bbung", password: "1234" });
+    const formData = new FormData($signupForm);
+
+    let obj = {};
+
+    for (let value of formData) {
+        obj[value[0]] = value[1];
+    }
+
+    if (!formValidation(obj)) {
+        return;
+    }
+
+    const res = await fetchSignUp(obj);
 
     if (!res) return;
 

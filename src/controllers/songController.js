@@ -18,7 +18,6 @@ export const playSong = async (req, res) => {
         await res.json({ data: song });
     } else {
         // 카운트 업
-        await findSong.update({ playcount: findSong.playcount + 1 });
         await res.json({ data: findSong });
     }
 };
@@ -27,6 +26,14 @@ export const getSong = async (req, res) => {
     const id = req.params.id;
     const findSong = await Song.findById(id);
     await res.json({ data: findSong });
+};
+
+export const updatePlayCount = async (req, res) => {
+    const id = req.params.id;
+    const findSong = await Song.findById(id);
+    Song.updateOne({ _id: id }, { playcount: findSong.playcount + 1 });
+
+    res.json();
 };
 
 export const searchSongList = async (req, res) => {
@@ -48,13 +55,13 @@ export const searchSongList = async (req, res) => {
         newTracks.push(await fomatSong(data));
     }
 
-    return res.json(newTracks);
+    return res.json({ data: newTracks });
 };
 
 export const getTrendingList = async (req, res) => {
     const list = await Song.find({}).sort({ playcount: "desc" }).limit(10);
 
-    return res.json(list);
+    return res.json({ data: list });
 };
 
 const getYoutubeId = async (album, artist) => {

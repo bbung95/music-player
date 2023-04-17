@@ -9,6 +9,7 @@
 @import "./components/signup.scss";
 @import "./components/home.scss";
 @import "./components/song.scss";
+@import "./components/playList.scss";
 
 // Screens
 // Example: @import "./screens/search.scss";
@@ -28,17 +29,22 @@ body {
     overflow: hidden;
 }
 
+*::-webkit-scrollbar {
+    display: none;
+}
+
 .main {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100vh;
+    height: calc(100vh - 160px);
+    overflow: auto;
 
     & .container {
         margin: 0 auto;
         width: 414px;
-        height: 100vh;
+        height: 100%;
     }
 
     transition-property: opacity;
@@ -47,12 +53,8 @@ body {
 
 @media screen and (min-width: $screen-pc) {
     .main {
-        margin-left: 100px;
-        width: calc(100% - 100px);
-
         & .container {
             width: $screen-pc;
-            height: 100vh;
         }
     }
 }
@@ -61,6 +63,7 @@ body {
     .main {
         margin-left: 100px;
         width: calc(100% - 100px);
+        height: calc(100vh - 100px);
     }
 }
 

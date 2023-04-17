@@ -1,6 +1,50 @@
+// .play-list-container {
+//     margin: 0 auto;
+//     padding-top: 20px;
+//     width: 90%;
+
+//     & > .title {
+//         padding: 8px 14px;
+//         width: fit-content;
+//         font-size: 30px;
+//     }
+
+//     & .play-list-box {
+//         position: relative;
+//         height: 160px;
+
+//         & .empty-item {
+//             position: absolute;
+//             top: 50%;
+//             left: 50%;
+//             width: 100%;
+//             transform: translate(-50%, -50%);
+//             text-align: center;
+
+//             & div {
+//                 font-size: 26px;
+//                 margin-bottom: 12px;
+//             }
+
+//             & p {
+//                 font-size: 16px;
+//                 color: rgb(226, 225, 225);
+
+//                 & a {
+//                     color: white;
+//                     &:hover {
+//                         color: rgb(226, 225, 225);
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }
+
 .trending-container {
     margin: 0 auto;
     padding-top: 40px;
+    padding-bottom: 40px;
     width: 90%;
 
     & > .title {
@@ -61,58 +105,17 @@
 
 @media screen and (min-width: $screen-pc) {
     .trending-container {
-        margin: 0 auto;
-        padding-top: 40px;
         width: 80%;
 
-        & > .title {
-            padding: 8px 14px;
-            width: fit-content;
-            font-size: 30px;
-        }
-
         & .trending-list-box {
-            list-style: none;
             display: flex;
             flex-wrap: wrap;
-            margin-top: 20px;
             height: auto;
-            background-color: inherit;
 
             & .trending-item {
                 box-sizing: border-box;
                 width: 50%;
                 height: 80px;
-
-                & img {
-                    width: 60px;
-                    height: 60px;
-                    border-radius: 12px;
-                }
-
-                & .item-info {
-                    width: 55%;
-                    & .title {
-                        font-size: 20px;
-                        font-weight: bold;
-                        margin-bottom: 6px;
-                    }
-
-                    & .artist {
-                        font-size: 14px;
-                        color: rgb(237, 237, 237);
-                    }
-                }
-
-                .play-count {
-                    margin-left: auto;
-                    padding: 0;
-                }
-
-                &:hover {
-                    background-color: rgba(lightgray, 0.2);
-                    border-radius: 12px;
-                }
             }
         }
     }

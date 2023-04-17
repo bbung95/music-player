@@ -1,0 +1,27 @@
+<section class="play-list-container hidden">
+    <div class="title-box">
+        <h1 class="title">Play List</h1>
+        <button class="add-modal-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+            </svg>
+        </button>
+    </div>
+    <ul class="play-list-box empty-item">
+        <div class="empty-item">
+            <div>로그인 필요</div>
+            <p><a href="/login">로그인</a>시 이용 가능합니다.</p>
+        </div>
+    </ul>
+</section>
+
+<dialog id="play-list-modal">
+    <div class="modal-container">
+        <input type="text" name="title" placeholder="재생목록 이름" />
+        <div class="button-group">
+            <button class="add-btn" type="button">추가</button>
+            <button class="cancel-btn" type="button">취소</button>
+        </div>
+    </div>
+</dialog>
