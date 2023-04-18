@@ -2,7 +2,7 @@
 <html lang="en">
     <%-include("partials/head.ejs")%>
     <body>
-        <main class="main">
+        <main class="main login">
             <div class="container">
                 <section class="login-container">
                     <form class="login-form">
@@ -13,7 +13,7 @@
                         <input class="input-text" name="password" type="password" placeholder="비밀번호" autocomplete="off" />
                         <div class="divider"></div>
                         <div class="btn-group">
-                            <button class="login-btn" type="submit">로그인</button>
+                            <button class="login-btn" type="button" disabled>로그인</button>
                             <button class="signup-btn active" type="button" onclick="location.href='/signup'">회원가입</button>
                         </div>
                     </form>

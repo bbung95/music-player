@@ -3,12 +3,25 @@
     <div class="top-box">
         <button class="top-btn"></button>
     </div>
+
     <div class="player-box">
         <div class="album-image-box">
-            <div class="image-wrap">
+            <div class="image-wrap rotate">
                 <img class="album-image" src="empty_song.png" />
             </div>
             <div id="ytplayer"></div>
+
+            <!-- <div class="song-image-box prev">
+                <div class="image-wrap">
+                    <img class="album-image" src="empty_song.png" />
+                </div>
+            </div>
+
+            <div class="song-image-box next">
+                <div class="image-wrap">
+                    <img class="album-image" src="empty_song.png" />
+                </div>
+            </div> -->
         </div>
         <div class="album-info">
             <p class="track">재생 중이 아님</p>
@@ -84,7 +97,7 @@
     const $prevBtn = document.querySelector(".prev-btn");
     const $nextBtn = document.querySelector(".next-btn");
     const $topBox = document.querySelector(".top-box");
-    const $imageWrap = document.querySelector(".image-wrap");
+    const $imageWrap = document.querySelector(".image-wrap.rotate");
     const $playBar = document.querySelector(".play-bar");
     const $volumeBar = document.querySelector(".volume-bar");
 
@@ -93,7 +106,10 @@
 
     const $trackTitle = document.querySelector(".track");
     const $artist = document.querySelector(".artist");
-    const $thumbnail = document.querySelector(".album-image");
+    const $thumbnail = $imageWrap.querySelector(".album-image");
+
+    // const $prevImage = document.querySelector(".song-image-box.prev");
+    // const $nextImage = document.querySelector(".song-image-box.next");
 
     let player;
     let playerQueue = [];
@@ -129,6 +145,8 @@
      * 5 중지
      */
     const onStateChange = async (event) => {
+        console.log(event.data);
+
         switch (event.data) {
             case 0:
                 $pauseBtn.style.display = "none";
@@ -177,7 +195,6 @@
 
     const rotateImage = () => {
         if ($playerContainer.className.includes("active") && !isRotate && isPlay) {
-            console.log("실행");
             isRotate = true;
 
             rotateIntervalID = setInterval(() => {
@@ -235,8 +252,8 @@
 
     const onPlayerPlay = () => {
         if (!isPlay) {
-            rotateImage();
             setPlayTime();
+            rotateImage();
         }
     };
 
@@ -269,6 +286,8 @@
         document.querySelector(".background").style.setProperty("background-image", `url(${thumbnail})`);
         // 싫행
         player.loadVideoById(videoId, 0, "small");
+
+        // setSongContent();
     };
 
     const playerSongs = (playListData) => {
@@ -295,6 +314,7 @@
             clearInterval(rotateIntervalID);
             $imageWrap.style.transform = `rotateZ(0deg)`;
         } else {
+            $imageWrap.style.transform = `rotateZ(${rotate}deg)`;
             rotateImage();
         }
     };
@@ -316,6 +336,16 @@
             alert("다음곡이 존재하지않습니다.");
         }
     };
+
+    // const setSongContent = () => {
+    //     if (playerQueue[index - 1]) {
+    //         console.log("prev", playerQueue[index - 1]);
+    //     }
+
+    //     if (playerQueue[index + 1]) {
+    //         console.log("next", playerQueue[index + 1]);
+    //     }
+    // };
 
     $playBtn.onclick = () => player.playVideo();
     $pauseBtn.onclick = onPlayerPasue;

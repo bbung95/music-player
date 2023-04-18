@@ -43,6 +43,13 @@ body {
     height: calc(100vh - 160px);
     overflow: auto;
 
+    &.login,
+    &.signup {
+        margin-left: 0;
+        height: 100vh;
+        width: 100%;
+    }
+
     & .container {
         margin: 0 auto;
         width: 414px;

@@ -131,6 +131,21 @@
                 color: lightgray;
             }
 
+            & .option-btn {
+                // position: absolute;
+                cursor: pointer;
+                right: 0;
+                height: 60px;
+                width: 60px;
+                color: white;
+                border: none;
+                background: none;
+
+                &:hover {
+                    color: lightgray;
+                }
+            }
+
             &:hover {
                 background-color: rgba(lightgray, 0.3);
             }
@@ -206,6 +221,10 @@
                     width: 20%;
                     font-size: 18px;
                     color: lightgray;
+                }
+
+                & .option-btn {
+                    position: absolute;
                 }
             }
         }

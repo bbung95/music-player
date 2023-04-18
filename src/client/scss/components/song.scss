@@ -116,6 +116,64 @@
             #ytplayer {
                 border-radius: 50%;
             }
+
+            & .song-image-box {
+                display: none;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 300px;
+                height: 300px;
+                transform: translate(-50%, -50%);
+
+                &.prev {
+                    left: -60%;
+                }
+
+                &.next {
+                    left: 160%;
+                }
+
+                & .image-wrap {
+                    position: relative;
+                    height: inherit;
+                    width: inherit;
+                    border-radius: 50%;
+                    overflow: hidden;
+                    border: 2px solid lightgray;
+
+                    & .album-image {
+                        width: inherit;
+                        height: inherit;
+                        box-shadow: rgba(0, 0, 0, 0.16) 10px 10px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+                    }
+
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        width: calc(300px - 20px);
+                        height: calc(300px - 20px);
+                        border: 2px solid lightgray;
+                        border-radius: 50%;
+                        transform: translate(-50%, -50%);
+                    }
+
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        width: 78px;
+                        height: 78px;
+                        border-radius: 50%;
+                        border: 1px solid lightgray;
+                        background-color: white;
+                        transform: translate(-50%, -50%);
+                    }
+                }
+            }
         }
 
         .album-info {
@@ -241,7 +299,11 @@
         opacity: 0;
     }
 
-    .player-box {
+    & .song-image-box {
+        display: none;
+    }
+
+    & .player-box {
         position: relative;
         display: flex;
         justify-content: center;
@@ -447,6 +509,12 @@
 }
 
 @media screen and (max-width: $screen-sm) {
+    .player-container {
+        & .song-image-box {
+            display: none;
+        }
+    }
+
     .player-container:not(.active) {
         & .player-box {
             & .album-image-box {

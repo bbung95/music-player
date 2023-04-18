@@ -2,7 +2,7 @@
 <html lang="en">
     <%-include("partials/head.ejs")%>
     <body>
-        <main class="main">
+        <main class="main signup">
             <div class="container">
                 <section class="signup-container">
                     <form class="signup-form">
@@ -14,7 +14,7 @@
                         <input class="input-text" name="nickname" type="text" placeholder="닉네임" />
                         <div class="divider"></div>
                         <div class="btn-group">
-                            <button class="signup-btn" type="submit">회원가입</button>
+                            <button class="signup-btn" type="button" disabled>회원가입</button>
                             <button class="cancel-btn active" type="button" onclick="location.href='/login'">취소</button>
                         </div>
                     </form>

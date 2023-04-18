@@ -32,7 +32,6 @@ export const updatePlayCount = async (req, res) => {
     const id = req.params.id;
     const findSong = await Song.findById(id);
 
-    console.log(findSong);
     await Song.update({ _id: id }, { playcount: findSong.playcount + 1 });
 
     res.json();

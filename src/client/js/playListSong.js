@@ -1,18 +1,18 @@
 import axios from "axios";
 import { get } from "./utils/module";
 import { async } from "regenerator-runtime";
-import { setPlayListBox } from "./playList";
+import { setPlayListContainer } from "./playList";
 
 const $playListContainer = get(".play-list-container");
 const $playListSongContainer = get(".play-list-song-container");
 
-const $playListImage = $playListSongContainer.querySelector(".play-list-image");
-const $playListTitle = $playListSongContainer.querySelector(".info-box .title");
-const $playListCount = $playListSongContainer.querySelector(".info-box .count");
-const $playListSongBox = $playListSongContainer.querySelector(".play-list-song-box");
-const $allPlayBtn = $playListSongContainer.querySelector(".all-play-btn");
-const $deleteBtn = $playListSongContainer.querySelector(".delete-btn");
-const $backBtn = $playListSongContainer.querySelector(".back-btn");
+const $playListImage = $playListSongContainer?.querySelector(".play-list-image");
+const $playListTitle = $playListSongContainer?.querySelector(".info-box .title");
+const $playListCount = $playListSongContainer?.querySelector(".info-box .count");
+const $playListSongBox = $playListSongContainer?.querySelector(".play-list-song-box");
+const $allPlayBtn = $playListSongContainer?.querySelector(".all-play-btn");
+const $deleteBtn = $playListSongContainer?.querySelector(".delete-btn");
+const $backBtn = $playListSongContainer?.querySelector(".back-btn");
 
 let playListData = [];
 
@@ -40,7 +40,6 @@ const handleDeleteSong = async (e, id) => {
     const res = await fetchDeleteSong(id);
 
     playListData = playListData.filter((item) => item.playSongId != id);
-    console.log(playListData);
     setPlayListSongs(playListData);
 };
 
@@ -62,7 +61,7 @@ const setPlayListSongs = (data) => {
             optionButton.className = "option-btn";
             optionButton.type = "button";
             optionButton.onclick = (e) => handleDeleteSong(e, item.playSongId);
-            optionButton.innerHTML = `;
+            optionButton.innerHTML = `
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
                 <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
             </svg>`;
@@ -83,15 +82,6 @@ const showPlayContainer = () => {
     $playListSongContainer.classList.toggle("hidden");
 };
 
-$allPlayBtn.onclick = () => {
-    playerSongs(playListData);
-};
-
-$backBtn.onclick = () => {
-    showPlayContainer();
-    setPlayListBox();
-};
-
 export const openPlayListSong = async (id) => {
     const data = await fetchGetPlayListSong(id);
 
@@ -104,11 +94,18 @@ export const openPlayListSong = async (id) => {
 
     showPlayContainer();
 
+    $backBtn.onclick = () => {
+        showPlayContainer();
+        setPlayListBox();
+    };
+    $allPlayBtn.onclick = () => {
+        if (playListData.length > 0) playerSongs(playListData);
+    };
     $deleteBtn.onclick = async () => {
         if (!confirm("재생목록을 삭제합니다.")) return;
         const res = await fetchDeletePlay(id);
 
-        await setPlayListBox();
+        await setPlayListContainer();
         showPlayContainer();
     };
 };

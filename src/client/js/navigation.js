@@ -1,7 +1,7 @@
 import axios from "axios";
 import { get } from "./utils/module.js";
 import { async } from "regenerator-runtime";
-import { setPlayListBox } from "./playList";
+import { setPlayListContainer } from "./playList";
 
 const $navigation = get(".navigation");
 const $homeBtn = get(".home-btn");
@@ -25,6 +25,10 @@ export const setNavigationModule = () => {
     $searchBoxBtn.onclick = () => {
         $searchContainer.classList.toggle("active");
         $navigation.classList.toggle("search");
+
+        window.onclick = (e) => {
+            console.log(e.target);
+        };
     };
     $logoutBtn.onclick = () => {
         const res = fetchLogout();
@@ -44,7 +48,7 @@ export const setNavigationModule = () => {
         $playListSongContainer.classList.add("hidden");
         $trendingContainer.classList.add("hidden");
 
-        setPlayListBox();
+        setPlayListContainer();
     };
 
     if (isLogin == "true") {

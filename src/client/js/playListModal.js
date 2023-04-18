@@ -4,8 +4,8 @@ import { async } from "regenerator-runtime";
 import axios from "axios";
 
 const $playListModal = get("#play-list-modal");
-const $modalPlayListBox = $playListModal.querySelector(".list-box");
-const $playListModalCancel = $playListModal.querySelector(".cancel-btn");
+const $modalPlayListBox = $playListModal?.querySelector(".list-box");
+const $playListModalCancel = $playListModal?.querySelector(".cancel-btn");
 
 const fetchAddPlayListSong = async (id, songId) => {
     const res = await axios({
@@ -48,12 +48,11 @@ const setPlayList = async (songId) => {
 export const openModal = async (songId) => {
     setPlayList(songId);
     $playListModal.showModal();
-};
 
-$playListModal.onclick = (event) => {
-    if (event.target.nodeName === "DIALOG") {
-        $playListModal.close();
-    }
+    $playListModal.onclick = (event) => {
+        if (event.target.nodeName === "DIALOG") {
+            $playListModal.close();
+        }
+    };
+    $playListModalCancel.onclick = () => $playListModal.close();
 };
-
-$playListModalCancel.onclick = () => $playListModal.close();

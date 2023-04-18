@@ -8,9 +8,9 @@ const $playListBox = get(".play-list-box");
 
 const $playListAddModalBtn = get(".play-list-container .add-modal-btn");
 const $playListAddModal = get("#play-list-add-modal");
-const $modalAddBtn = $playListAddModal.querySelector(".add-btn");
-const $modalCancelBtn = $playListAddModal.querySelector(".cancel-btn");
-const $playListTitleInput = $playListAddModal.querySelector("input[name=title]");
+const $modalAddBtn = $playListAddModal?.querySelector(".add-btn");
+const $modalCancelBtn = $playListAddModal?.querySelector(".cancel-btn");
+const $playListTitleInput = $playListAddModal?.querySelector("input[name=title]");
 
 export const fetchGetPlayList = async () => {
     const res = await axios.get("/api/playlist");
@@ -18,7 +18,7 @@ export const fetchGetPlayList = async () => {
     return res.data.data;
 };
 
-export const setPlayListBox = async () => {
+const setPlayListBox = async () => {
     const data = await fetchGetPlayList();
 
     if (data.length > 0) {
@@ -47,7 +47,7 @@ export const setPlayListBox = async () => {
     }
 };
 
-const setPlayListContainer = () => {
+export const setPlayListContainer = () => {
     if (isLogin == "true") {
         $playListTitle.textContent = `${sessionUser.nickname}님의 Play List`;
         setPlayListBox();
