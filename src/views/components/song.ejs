@@ -145,14 +145,11 @@
      * 5 중지
      */
     const onStateChange = async (event) => {
-        console.log(event.data);
-
         switch (event.data) {
             case 0:
                 $pauseBtn.style.display = "none";
                 $playBtn.style.display = "block";
                 $currentTime.textContent = formatTime(player.getDuration());
-                // 유튜브 아이디로 바로 시작
 
                 index += 1;
 
@@ -252,6 +249,8 @@
 
     const onPlayerPlay = () => {
         if (!isPlay) {
+            clearInterval(rotateIntervalID);
+            clearInterval(playTimeIntervalID);
             setPlayTime();
             rotateImage();
         }
