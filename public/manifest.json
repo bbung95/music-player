@@ -1,0 +1,22 @@
+{
+    "manifest_version": 2,
+    "name": "Bbung music",
+    "short_name": "Bbung",
+    "icons": [
+        {
+            "src": "icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "display": "standalone",
+    "orientation": "landscape",
+    "background_color": "#fff",
+    "theme_color": "#fff",
+    "start_url": "/"
+}

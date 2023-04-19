@@ -281,7 +281,7 @@
     const playerSong = ({ title, artist, thumbnail, videoId }) => {
         $trackTitle.textContent = title;
         $artist.textContent = artist;
-        $thumbnail.src = thumbnail ?? "/public/empty_song.png";
+        $thumbnail.src = thumbnail ?? "empty_song.png";
         document.querySelector(".background").style.setProperty("background-image", `url(${thumbnail})`);
         // 싫행
         player.loadVideoById(videoId, 0, "small");

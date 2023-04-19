@@ -17,6 +17,11 @@ const fetchAddPlayListSong = async (id, songId) => {
         data: {
             songId,
         },
+    }).catch((e) => {
+        if (e) {
+            alert(e.response.data);
+            return false;
+        }
     });
 
     return res;
@@ -25,8 +30,9 @@ const fetchAddPlayListSong = async (id, songId) => {
 const addPlayListSong = async (id, songId) => {
     const res = await fetchAddPlayListSong(id, songId);
 
-    alert("재생목록에 추가되었습니다.");
+    if (!res) return;
 
+    alert("재생목록에 추가되었습니다.");
     $playListModal.close();
 };
 
