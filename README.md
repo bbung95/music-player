@@ -1,16 +1,61 @@
-# Melon Contest Blueprint
+# 🎵 뮤직 플레이어
 
-## How to run?
+![](/public/icon-192x192.png)
 
-- Open this folder on VSCode.
-- Click on `View` -> `Terminal`.
-- Run `npm i`.
-- Start `mongodb`.
-- Change the `COOKIE_SECRET` on the `.env` file.
-- Run `npm run dev:server`.
-- Open another terminal and run `npm run dev:assets`.
+> 음악을 검색하고 플레이리스트에 저장하고 들을 수 있는 플레이어입니다.
 
-## How to deploy?
+**배포** : https://sjhygkvdrt.us17.qoddiapp.com/
 
-- Run `npm run build`.
-- Run `npm start`.
+## 🚀 주요기능
+
+---
+
+-   원하는 음악을 검색해 음악을 들을 수 있습니다.
+-   TOP 10 을 통해 사람들이 제일 많이 듣는 음악을 순서대로 알 수 있습니다.
+-   비회원도 음악을 들을 수 있으며, 회원 로그인 시 플레이리스트를 사용할 수 있습니다.
+-   플레이리스트에 음악을 저장하고, 삭제할 수 있습니다.
+-   반응형으로 웹과 앱 환경에서도 최적화된 페이지를 이용할 수 있습니다.
+
+## 📼 Demo
+
+---
+
+| 🎶 음악 재생 (하단바)                                                                                                          | 💿 음악재생 (전체 화면)                                                                                                        |
+| ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
+| <img src="https://user-images.githubusercontent.com/77668478/233010773-3b181940-7fae-47e3-ad4d-e967743524bc.gif" width="70%"/> | <img src="https://user-images.githubusercontent.com/77668478/233011587-5f5d9b2b-d2cb-4e3f-aec7-c18c73ef2cf5.gif" width="70%"/> |
+
+| 🔍 검색                                                                                                                         | 📝 플레이 리스트                                                                                                               |
+| ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| <img src="https://user-images.githubusercontent.com/77668478/233011956-c1b20a83-e3ed-48c4-87c1-fefb850dbcdc.gif" width="70%" /> | <img src="https://user-images.githubusercontent.com/77668478/233012050-11627280-a06c-4519-94c3-25766104c0cb.gif" width="70%"/> |
+
+| 🖥️ 반응형                                                                                                              |
+| ---------------------------------------------------------------------------------------------------------------------- |
+| ![반응형](https://user-images.githubusercontent.com/77668478/233013091-818c36ce-a186-4750-95e8-0413a475071b.gif) |
+
+## ⚡️ Skills
+
+---
+
+### FrontEnd
+
+-   **ejs** 템플릿을 사용하여 화면을 구현했습니다.
+    -   대부분 axios API통신을 통해 데이터를 가져오도록 구현했습니다.
+-   **SASS** 로 CSS style을 관리했습니다.
+    -   각 view, component별로 구분하여 style을 관리했습니다.
+
+### BackEnd
+
+-   **express** 로 API서버 를 구축했습니다.
+    -   view Routing과 API를 설계했습니다.
+-   **MongoDB** 로 session, 음악 등 데이터를 저장했습니다.
+    -   mongodb atlas로 클라우드 환경에서 DB를 관리하고 저장할 수 있도록 했습니다.
+
+### API
+
+-   **last.fm API** 로 앨범과 아티스트, 타이틀 정보를 가져왔습니다.
+-   **Youtube API** 로 음악을 재생했습니다.
+
+### Infra
+
+-   **qoddi** 로 express서버를 배포하였습니다.
+-   **PWA** 를 적용시켜 웹을 앱과 같은 환경에서 앱처럼 동작하도록 구현했습니다.

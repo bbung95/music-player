@@ -25,10 +25,6 @@ export const setNavigationModule = () => {
     $searchBoxBtn.onclick = () => {
         $searchContainer.classList.toggle("active");
         $navigation.classList.toggle("search");
-
-        window.onclick = (e) => {
-            console.log(e.target);
-        };
     };
     $logoutBtn.onclick = () => {
         const res = fetchLogout();
