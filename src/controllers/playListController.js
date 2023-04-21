@@ -75,7 +75,9 @@ export const addPlayListSong = async (req, res) => {
     const id = req.params.id;
     const body = req.body;
 
-    const findSong = PlaySong.findOne({ songId: body.songId, playId: id });
+    const findSong = await PlaySong.findOne({ songId: body.songId, playId: id });
+
+    console.log(findSong);
 
     if (findSong) {
         return res.status(400).json("이미 플레이리스트에 추가되어있습니다.");
