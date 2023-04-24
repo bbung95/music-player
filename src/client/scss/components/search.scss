@@ -4,6 +4,7 @@
     height: calc(100vh - 160px);
     width: $mobile-width;
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 
     &.active {
         display: block;

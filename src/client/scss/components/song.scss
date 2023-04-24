@@ -116,6 +116,7 @@
             #ytplayer {
                 border-radius: 50%;
                 opacity: 0;
+                scale: 0;
             }
 
             & .song-image-box {
@@ -335,6 +336,7 @@
                 height: 70px;
                 width: 70px;
                 opacity: 0;
+                scale: 0;
             }
         }
 
