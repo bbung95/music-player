@@ -520,7 +520,11 @@
     .player-container:not(.active) {
         & .player-box {
             & .album-image-box {
-                margin-left: 120px;
+                margin-left: 110px;
+            }
+
+            & .button-group {
+                left: 0 !important;
             }
         }
 
