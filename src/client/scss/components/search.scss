@@ -2,7 +2,8 @@
     display: none;
     margin: 0 auto 100px;
     height: calc(100vh - 160px);
-    width: $mobile-width;
+    max-width: $mobile-width;
+    width: 100%;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
 

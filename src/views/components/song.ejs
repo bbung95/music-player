@@ -356,10 +356,15 @@
     $playerContainer.onclick = (e) => {
         let target = e.target;
 
-        console.log(target);
-
         if (!$playerContainer.className.includes("active")) {
-            if (target.className === "player-controller" || target.className === "album-image" || target.className === "track" || target.className === "artist") showPlayer();
+            if (
+                target.className === "player-controller" ||
+                target.className === "album-info" ||
+                target.className === "album-image" ||
+                target.className.includes("track") ||
+                target.className.includes("artist")
+            )
+                showPlayer();
         }
     };
 </script>
