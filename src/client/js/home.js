@@ -4,6 +4,7 @@ import { get } from "./utils/module.js";
 import { openModal } from "./playListModal.js";
 
 const $trendingListBox = get(".trending-list-box");
+const $recentListBox = get(".recent-list-box");
 
 const handleOnClickOptionBtn = (e, id) => {
     e.stopPropagation();
@@ -46,6 +47,40 @@ const setTrendingListBox = async () => {
     });
 };
 
+const fetchRecentList = async () => {
+    const recent = localStorage.getItem("recent-list") ?? "[]";
+
+    const res = await axios({
+        method: "get",
+        url: "/api/songs/recent",
+        params: {
+            recent,
+        },
+    });
+
+    return res.data.data;
+};
+
+const setRecentList = async () => {
+    const data = await fetchRecentList();
+
+    data.forEach((item) => {
+        const el = document.createElement("li");
+        el.className = "recent-list-item";
+        el.onclick = () => setPlayerSong(item._id);
+        el.innerHTML = `
+              <img class="recent-item-img" src="${item.thumbnail ?? "empty_song.png"}">
+              <div class="info">
+                <div class="title truncate">${item.title}</div>
+                <p class="artist truncate">${item.artist}</p>
+              </div>
+            `;
+
+        $recentListBox.append(el);
+    });
+};
+
 export const setHomeModule = async () => {
+    setRecentList();
     setTrendingListBox();
 };

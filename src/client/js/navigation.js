@@ -10,8 +10,9 @@ const $playListBtn = get(".player-btn");
 const $loginBtn = get(".login-btn");
 const $logoutBtn = get(".logout-btn");
 
+const $homeContentsContainer = get(".home-contents-container");
+const $playListContentsContainer = get(".playlist-contents-container");
 const $searchContainer = get(".search-container");
-const $trendingContainer = get(".trending-container");
 const $playListContainer = get(".play-list-container");
 const $playListSongContainer = get(".play-list-song-container");
 
@@ -34,15 +35,15 @@ export const setNavigationModule = () => {
     };
 
     $homeBtn.onclick = () => {
-        $playListContainer.classList.add("hidden");
+        $playListContentsContainer.classList.add("hidden");
+        $playListContainer.classList.remove("hidden");
         $playListSongContainer.classList.add("hidden");
-        $trendingContainer.classList.remove("hidden");
+        $homeContentsContainer.classList.remove("hidden");
     };
 
     $playListBtn.onclick = () => {
-        $playListContainer.classList.remove("hidden");
-        $playListSongContainer.classList.add("hidden");
-        $trendingContainer.classList.add("hidden");
+        $homeContentsContainer.classList.add("hidden");
+        $playListContentsContainer.classList.remove("hidden");
 
         setPlayListContainer();
     };

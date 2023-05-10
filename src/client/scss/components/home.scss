@@ -1,49 +1,52 @@
-// .play-list-container {
-//     margin: 0 auto;
-//     padding-top: 20px;
-//     width: 90%;
+.recent-container {
+    margin: 0 auto;
+    padding-top: 40px;
+    width: 90%;
 
-//     & > .title {
-//         padding: 8px 14px;
-//         width: fit-content;
-//         font-size: 30px;
-//     }
+    & > .title {
+        padding: 8px 14px;
+        width: fit-content;
+        font-size: 30px;
+    }
 
-//     & .play-list-box {
-//         position: relative;
-//         height: 160px;
+    & .recent-list-box {
+        list-style: none;
+        position: relative;
+        display: flex;
+        margin-top: 20px;
+        background-color: inherit;
+        overflow: auto;
+        gap: 12px;
 
-//         & .empty-item {
-//             position: absolute;
-//             top: 50%;
-//             left: 50%;
-//             width: 100%;
-//             transform: translate(-50%, -50%);
-//             text-align: center;
+        & .recent-list-item {
+            cursor: pointer;
+            width: 180px;
+            height: 240px;
 
-//             & div {
-//                 font-size: 26px;
-//                 margin-bottom: 12px;
-//             }
+            & .recent-item-img {
+                width: 180px;
+                height: 180px;
+                border-radius: 8px;
+            }
 
-//             & p {
-//                 font-size: 16px;
-//                 color: rgb(226, 225, 225);
+            & .info {
+                margin-top: 8px;
+                padding: 0 10px;
 
-//                 & a {
-//                     color: white;
-//                     &:hover {
-//                         color: rgb(226, 225, 225);
-//                     }
-//                 }
-//             }
-//         }
-//     }
-// }
+                & .title {
+                    font-size: 20px;
+                }
+
+                & .artist {
+                    color: lightgray;
+                }
+            }
+        }
+    }
+}
 
 .trending-container {
     margin: 0 auto;
-    padding-top: 40px;
     padding-bottom: 40px;
     width: 90%;
 
@@ -132,6 +135,39 @@
                 box-sizing: border-box;
                 width: 50%;
                 height: 80px;
+            }
+        }
+    }
+}
+
+@media screen and (min-width: $screen-pc) {
+    .recent-container {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: $screen-sm) {
+    .recent-list-box {
+        & .recent-list-item {
+            cursor: pointer;
+            width: 120px !important;
+            height: 180px !important;
+
+            & .recent-item-img {
+                width: 120px !important;
+                height: 120px !important;
+                border-radius: 8px;
+            }
+
+            & .info {
+                padding: 0 5px !important;
+                & .title {
+                    font-size: 16px !important;
+                }
+
+                & .artist {
+                    font-size: 14px !important;
+                }
             }
         }
     }

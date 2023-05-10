@@ -2,6 +2,7 @@ import async from "regenerator-runtime";
 import Song from "../models/Song";
 import User from "../models/User";
 import axios from "axios";
+import e from "express";
 
 const API_END_POINT = "https://ws.audioscrobbler.com/2.0/";
 
@@ -26,6 +27,19 @@ export const getSong = async (req, res) => {
     const id = req.params.id;
     const findSong = await Song.findById(id);
     await res.json({ data: findSong });
+};
+
+export const getRecentSongList = async (req, res) => {
+    const recentList = JSON.parse(req.query.recent);
+
+    const data = [];
+
+    for (let value of recentList) {
+        const findSong = await Song.findById(value);
+        data.push(findSong);
+    }
+
+    await res.json({ data: data });
 };
 
 export const updatePlayCount = async (req, res) => {

@@ -122,7 +122,6 @@
             videoId: "",
             playerVars: { controls: 0 },
             events: {
-                // onReady: onPlayerReady,
                 onStateChange: onStateChange,
             },
         });
@@ -301,6 +300,22 @@
         playerQueue = [data];
 
         playerSong(data);
+
+        // 최근듣기에 추가
+        const storageData = JSON.parse(localStorage.getItem("recent-list") ?? "[]");
+        const set = new Set(storageData);
+        const list = [...set];
+
+        if (!list.includes(id)) {
+            list.unshift(id);
+        } else {
+            list.splice(list.indexOf(id), 1);
+            list.unshift(id);
+        }
+        if (list.length > 10) {
+            list.splice(10);
+        }
+        localStorage.setItem("recent-list", JSON.stringify(list));
     };
 
     const showPlayer = () => {

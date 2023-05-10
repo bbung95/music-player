@@ -1,6 +1,6 @@
 import express from "express";
 import { home } from "../controllers/homeController";
-import { song, playSong, searchSongList, getSong, getTrendingList, updatePlayCount } from "../controllers/songController";
+import { song, playSong, searchSongList, getSong, getTrendingList, updatePlayCount, getRecentSongList } from "../controllers/songController";
 import { addUser, login, loginUser, logoutUser, signup } from "../controllers/userController";
 import { addPlayList, addPlayListSong, getPlayList, getPlayListSong, removePlayList, removePlayListSong } from "../controllers/playListController";
 
@@ -24,5 +24,7 @@ rootRouter.post("/api/playlist", addPlayList);
 rootRouter.post("/api/playlist/:id", addPlayListSong);
 rootRouter.delete("/api/playlist/:id", removePlayList);
 rootRouter.delete("/api/playlist/song/:id", removePlayListSong);
+
+rootRouter.get("/api/songs/recent", getRecentSongList);
 
 export default rootRouter;
