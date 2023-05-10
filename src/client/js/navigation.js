@@ -39,12 +39,18 @@ export const setNavigationModule = () => {
         $playListContainer.classList.remove("hidden");
         $playListSongContainer.classList.add("hidden");
         $homeContentsContainer.classList.remove("hidden");
+
+        if ($searchContainer.classList.contains("active")) {
+            $searchContainer.classList.remove("active");
+        }
     };
 
     $playListBtn.onclick = () => {
         $homeContentsContainer.classList.add("hidden");
         $playListContentsContainer.classList.remove("hidden");
-
+        if ($searchContainer.classList.contains("active")) {
+            $searchContainer.classList.remove("active");
+        }
         setPlayListContainer();
     };
 
