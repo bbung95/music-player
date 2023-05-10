@@ -350,10 +350,12 @@
             z-index: 10;
 
             & .track {
+                width: 100%;
                 font-size: 20px;
             }
 
             & .artist {
+                width: 100%;
                 font-size: 16px;
             }
         }
@@ -464,7 +466,7 @@
 
 @media screen and (max-width: $screen-mobile) {
     .player-container:not(.active) {
-        bottom: 60px;
+        bottom: 80px;
         left: 50%;
         width: 100%;
         transform: translateX(-50%);

@@ -155,3 +155,18 @@
         }
     }
 }
+
+@media screen and (max-width: $screen-sm) {
+    .play-list-container {
+        & .play-list-box {
+            & .play-list-item {
+                flex: 1;
+
+                & .play-list-img {
+                    width: 100%;
+                    height: auto;
+                }
+            }
+        }
+    }
+}
