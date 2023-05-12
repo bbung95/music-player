@@ -13,10 +13,37 @@
         list-style: none;
         position: relative;
         display: flex;
-        margin-top: 20px;
+        margin-top: 10px;
         background-color: inherit;
         overflow: auto;
         gap: 12px;
+        min-height: 240px;
+
+        & .empty-item {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+
+            & div {
+                font-size: 22px;
+                margin-bottom: 12px;
+            }
+
+            & p {
+                font-size: 16px;
+                color: rgb(226, 225, 225);
+
+                & a {
+                    color: white;
+                    &:hover {
+                        color: rgb(226, 225, 225);
+                    }
+                }
+            }
+        }
 
         & .recent-list-item {
             cursor: pointer;
@@ -148,6 +175,27 @@
 
 @media screen and (max-width: $screen-sm) {
     .recent-list-box {
+        min-height: 180px !important;
+
+        & .empty-item {
+            & div {
+                font-size: 20px !important;
+                margin-bottom: 12px;
+            }
+
+            & p {
+                font-size: 16px;
+                color: rgb(226, 225, 225);
+
+                & a {
+                    color: white;
+                    &:hover {
+                        color: rgb(226, 225, 225);
+                    }
+                }
+            }
+        }
+
         & .recent-list-item {
             cursor: pointer;
             width: 120px !important;

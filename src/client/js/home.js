@@ -64,20 +64,30 @@ const fetchRecentList = async () => {
 const setRecentList = async () => {
     const data = await fetchRecentList();
 
-    data.forEach((item) => {
-        const el = document.createElement("li");
-        el.className = "recent-list-item";
-        el.onclick = () => setPlayerSong(item._id);
-        el.innerHTML = `
-              <img class="recent-item-img" src="${item.thumbnail ?? "empty_song.png"}">
-              <div class="info">
-                <div class="title truncate">${item.title}</div>
-                <p class="artist truncate">${item.artist}</p>
-              </div>
-            `;
+    console.log(data);
 
-        $recentListBox.append(el);
-    });
+    if (data.length > 0) {
+        data.forEach((item) => {
+            const el = document.createElement("li");
+            el.className = "recent-list-item";
+            el.onclick = () => setPlayerSong(item._id);
+            el.innerHTML = `
+                  <img class="recent-item-img" src="${item.thumbnail ?? "empty_song.png"}">
+                  <div class="info">
+                    <div class="title truncate">${item.title}</div>
+                    <p class="artist truncate">${item.artist}</p>
+                  </div>
+                `;
+
+            $recentListBox.append(el);
+        });
+    } else {
+        const el = `<div class="empty-item">
+                        <div>플레이 곡이 없습니다.</div>
+                        <p>곡을 플레이해주세요.</p>
+                    </div>`;
+        $recentListBox.innerHTML = el;
+    }
 };
 
 export const setHomeModule = async () => {
