@@ -107,4 +107,8 @@ export const setSearchModule = () => {
         $searchContainer.classList.toggle("active");
         $navigation.classList.toggle("search");
     };
+
+    $searchInput.onkeyup = (e) => {
+        if (window.event.keyCode == 13) handleSearch();
+    };
 };

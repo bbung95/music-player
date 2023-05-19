@@ -2,7 +2,7 @@
     display: none;
     margin: 0 auto 100px;
     height: calc(100vh - 160px);
-    max-width: $mobile-width;
+    // max-width: $mobile-width;
     width: 100%;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -13,7 +13,7 @@
 
     & .input-group {
         position: relative;
-        margin: 20px auto 0;
+        margin: 40px auto 0;
         width: 90%;
 
         & .input-text {
@@ -151,6 +151,10 @@
         left: $nav-tab-width;
         border-radius: 0 20px 0 0;
         background-color: rgba(lightgray, 0.2);
+
+        & .input-group {
+            margin-top: 20px;
+        }
 
         & .search-list-box {
             width: 95%;
